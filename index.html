@@ -161,22 +161,29 @@ input[type=range]{width:100%}
   <div class="layer" id="toasts"></div>
   <div class="layer" id="ovl"></div>
 </div>
-<script src="js/art.js"></script>
-<script src="js/world.js"></script>
-<script src="js/pixel.js"></script>
-<script src="js/rooms.js"></script>
-<script src="js/audio.js"></script>
-<script src="js/engine.js"></script>
-<script src="story/c1.js"></script>
-<script src="story/c2.js"></script>
-<script src="story/c3.js"></script>
-<script src="story/c4.js"></script>
-<script src="story/c5.js"></script>
-<script src="story/c6.js"></script>
-<script src="story/c7.js"></script>
-<script src="story/c8.js"></script>
-<script src="story/c9.js"></script>
-<script src="story/cinematics.js"></script>
-<script>G.boot();</script>
+<script>
+// Caricatore robusto: carica gli script in ordine, ritenta se la rete inciampa, avvisa invece di restare a schermo nero.
+(function () {
+  var FILES = ['js/art.js', 'js/world.js', 'js/pixel.js', 'js/rooms.js', 'js/audio.js', 'js/engine.js',
+    'story/c1.js', 'story/c2.js', 'story/c3.js', 'story/c4.js', 'story/c5.js', 'story/c6.js', 'story/c7.js', 'story/c8.js', 'story/c9.js', 'story/cinematics.js'];
+  FILES.forEach(function (f) { var l = document.createElement('link'); l.rel = 'preload'; l.as = 'script'; l.href = f; document.head.appendChild(l); });
+  function fail(f) {
+    var d = document.createElement('div');
+    d.style.cssText = 'position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;background:#05060d;color:#e8e6f0;font:16px system-ui;text-align:center;padding:24px;z-index:99';
+    d.innerHTML = '<b>Caricamento non riuscito</b><span style="color:#9a97b0;font-size:13px">La connessione si è interrotta (' + f + ').<br>Riprova con la rete attiva: dopo il primo avvio completo il gioco funziona anche offline.</span><button style="padding:10px 22px;border-radius:20px;border:1px solid #556;background:#1a1c2e;color:#fff;font-size:15px">Riprova</button>';
+    d.querySelector('button').onclick = function () { location.reload(); };
+    document.body.appendChild(d);
+  }
+  function load(i, tries) {
+    if (i >= FILES.length) { try { G.boot(); } catch (e) { fail('avvio'); throw e; } return; }
+    var s = document.createElement('script');
+    s.src = FILES[i] + (tries ? '?r=' + tries + '-' + Date.now() : '');
+    s.onload = function () { load(i + 1, 0); };
+    s.onerror = function () { s.remove(); if (tries < 3) setTimeout(function () { load(i, tries + 1); }, 500 * (tries + 1)); else fail(FILES[i]); };
+    document.body.appendChild(s);
+  }
+  load(0, 0);
+})();
+</script>
 </body>
 </html>

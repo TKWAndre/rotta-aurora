@@ -227,6 +227,7 @@ const G = (() => {
     skipOn = false; updTB();
     const vis = opts.map((o, i) => ({ o, i })).filter(x => cond(x.o.if));
     const box = $('ch'); box.innerHTML = '';
+    if (!vis.length) return -1;
     return new Promise(res => {
       vis.forEach(({ o, i }, k) => {
         const b = el('button', '', o.t + (o.if ? `<span class="req">✦ scelta sbloccata</span>` : ''));
@@ -291,6 +292,7 @@ const G = (() => {
       }
       if (s.choice) {
         const idx = await choose(s.choice, key); const o = s.choice[idx];
+        if (!o) continue; // nessuna opzione disponibile: prosegui invece di bloccarti
         if (o.set) Object.assign(S.flags, o.set);
         if (o.add) for (const [k, v] of Object.entries(o.add)) { S.flags[k] = (S.flags[k] || 0) + v; if (k === 'dark' && v > 0) { AUDIO.sfx('dark'); toast('<span style="color:#c08aff">◆ L\'oscurità cresce in te</span>'); } }
         if (o.aff) applyAff(o.aff);
@@ -796,13 +798,21 @@ const G = (() => {
       ${ends ? `<button class="btn" id="tNg">Nuova Partita+ <small>(mantieni livello e oggetti)</small></button>` : ''}
       <button class="btn small" id="tLoad">Carica</button>
       <button class="btn small" id="tExtra">Finali (${ends}/7) e Opzioni</button></div>`);
-    d.id = 'title'; o.appendChild(d);
+    d.id = 'title'; o.appendChild(d); offBadge();
     const go = fn => () => { AUDIO.init(); AUDIO.sfx('choice'); fn(); };
     if (auto) $('tCont').onclick = go(() => loadState(auto));
     $('tNew').onclick = go(async () => { if (auto && !(await ask('Iniziare una nuova partita? Il salvataggio automatico verrà sostituito (gli slot manuali restano).'))) return; newGame(); });
     if (ends) $('tNg').onclick = go(() => { const base = auto || LS.get('save_1', null); newGame(base ? { lv: Math.max(base.lv, 1), items: base.items, money: base.money } : null); });
     $('tLoad').onclick = go(() => { let h = '<h1>Carica</h1>'; for (let i = 1; i <= 3; i++) { const sd = LS.get('save_' + i, null); h += `<div class="card">${describeSave(sd)}${sd ? `<button class="btn small" data-l="${i}">Carica</button>` : ''}</div>`; } const ov = overlay(h + '<button class="btn" id="lx">Indietro</button>'); ov.querySelectorAll('[data-l]').forEach(b => b.onclick = () => loadState(LS.get('save_' + b.dataset.l))); $('lx').onclick = titleScreen; });
     $('tExtra').onclick = go(() => { const ov = overlay(`<h1>Finali</h1>${Object.entries(ENDINGS).map(([k, v]) => `<div class="card">${P.endings[k] ? '✦ <b>' + v + '</b>' : '🔒 ???'}</div>`).join('')}${menuOptions()}<button class="btn" id="ex">Indietro</button>`); bindOptions(); $('ex').onclick = titleScreen; });
+  }
+  // stato offline (dal service worker)
+  let OFF = null;
+  function offBadge() {
+    const t = document.querySelector('#title .menu'); if (!t || location.protocol !== 'https:') return;
+    let b = document.getElementById('offB'); if (!b) { b = el('div', ''); b.id = 'offB'; t.appendChild(b); }
+    b.textContent = !OFF ? 'Preparazione per l\'offline…' : OFF.err ? 'Offline non disponibile' : OFF.cached >= OFF.total ? '✓ Pronto per giocare offline' : `Download per l'offline: ${OFF.cached}/${OFF.total}`;
+    b.style.cssText = 'font-size:12px;text-align:center;margin-top:6px;color:' + (OFF && !OFF.err && OFF.cached >= OFF.total ? '#8fe3b0' : 'var(--dim)');
   }
   function newGame(ng) {
     S = fresh(); if (ng) { S.lv = ng.lv; S.items = Object.assign({}, ng.items); S.money = ng.money; S.ng = 1; }
@@ -816,10 +826,20 @@ const G = (() => {
     const d = el('div', '', `<div class="logo"><h1>ROTTA<br>D'AURORA</h1><p>Un viaggio verso l'alba</p></div><div class="tap">TOCCA PER INIZIARE</div>`); d.id = 'title';
     setBg('lutece_night'); requestAnimationFrame(frame);
     $('ovl').appendChild(d); d.onclick = () => { AUDIO.init(); AUDIO.play('title'); titleScreen(); };
-    if ('serviceWorker' in navigator && location.protocol === 'https:') navigator.serviceWorker.register('sw.js').catch(() => { });
+    if ('serviceWorker' in navigator && location.protocol === 'https:') {
+      navigator.serviceWorker.addEventListener('message', e => { if (e.data && e.data.type === 'status') { OFF = e.data; offBadge(); } });
+      const ask = () => navigator.serviceWorker.ready.then(r => r.active && r.active.postMessage('status'));
+      navigator.serviceWorker.register('sw.js').then(ask).catch(() => { OFF = { err: 1 }; offBadge(); });
+      // aggiornamento: se c'era già una versione, ricarica appena sei al titolo (mai a metà partita)
+      const had = !!navigator.serviceWorker.controller;
+      navigator.serviceWorker.addEventListener('controllerchange', () => {
+        ask(); if (!had) return; autosave();
+        const go = () => { if (R.mode === 'title') location.reload(); else setTimeout(go, 3000); }; go();
+      });
+    }
     document.addEventListener('visibilitychange', () => { if (document.hidden) { autosave(); } });
     // debug hooks
-    window.__G = { get S() { return S; }, openMapAt: (ch) => { S.ch = ch; openMap(); }, CH, SCENES, runScene: (id) => runScene(id, null), startChapter, newGame, fresh: () => { S = fresh(); healAll(); }, openMap, battle, gainXp, healAll };
+    window.__G = { get S() { return S; }, openMapAt: (ch) => { S.ch = ch; openMap(); }, CH, SCENES, runScene: (id) => runScene(id, null), startChapter, newGame, fresh: () => { S = fresh(); healAll(); }, openMap, battle, gainXp, healAll, get R() { return R; }, visible: () => visibleNodes(), isDone: n => isDone(n), enter: id => { const n = CH[S.ch].map.nodes.find(x => x.id === id); if (n) enterNode(n, isDone(n)); }, playCine, CINE };
   }
   return { chapter, boot, cine, ending: () => { } };
 })();
