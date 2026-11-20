@@ -17,7 +17,8 @@
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;-webkit-user-select:none;user-select:none}
 html,body{margin:0;height:100%;background:#000;color:var(--ink);overflow:hidden;font-family:"Iowan Old Style","Palatino","Georgia",serif;touch-action:manipulation;overscroll-behavior:none}
 #app{position:fixed;inset:0}
-canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+body.bigmap #mapHead,body.bigmap #menuBtn{display:none!important}
+canvas{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
 .layer{position:absolute;inset:0;pointer-events:none}
 .layer>*{pointer-events:auto}
 button{font-family:inherit;color:var(--ink);background:none;border:0;cursor:pointer}
@@ -164,7 +165,7 @@ input[type=range]{width:100%}
 <script>
 // Caricatore robusto: carica gli script in ordine, ritenta se la rete inciampa, avvisa invece di restare a schermo nero.
 (function () {
-  var FILES = ['js/art.js', 'js/world.js', 'js/pixel.js', 'js/rooms.js', 'js/audio.js', 'js/engine.js',
+  var FILES = ['js/art.js', 'js/world.js', 'js/pixel.js', 'js/sprites.js', 'js/modern.js', 'js/rooms.js', 'js/audio.js', 'js/engine.js',
     'story/c1.js', 'story/c2.js', 'story/c3.js', 'story/c4.js', 'story/c5.js', 'story/c6.js', 'story/c7.js', 'story/c8.js', 'story/c9.js', 'story/cinematics.js'];
   FILES.forEach(function (f) { var l = document.createElement('link'); l.rel = 'preload'; l.as = 'script'; l.href = f; document.head.appendChild(l); });
   function fail(f) {

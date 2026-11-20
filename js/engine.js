@@ -154,7 +154,7 @@ const G = (() => {
   function overlay(html) { const o = $('ovl'); o.innerHTML = ''; if (html == null) return null; const d = el('div', 'ov', html); o.appendChild(d); return d; }
   function closeOverlay() { $('ovl').innerHTML = ''; }
   function ask(text) { return new Promise(res => { const box = el('div', 'ov', `<div style="margin-top:30vh"><div class="card" style="text-align:center;font-size:17px">${text}</div><button class="btn" id="askY">Sì</button><button class="btn small" id="askN">No</button></div>`); box.style.zIndex = 50; $('ovl').appendChild(box); box.querySelector('#askY').onclick = () => { box.remove(); res(true); }; box.querySelector('#askN').onclick = () => { box.remove(); res(false); }; }); }
-  function setTop() { const on = R.mode === 'map' || R.mode === 'scene'; show('menuBtn', on); }
+  function setTop() { if (R.mode !== 'map') { document.body.classList.remove('bigmap'); if (ROOMS.level) ROOMS.level.big = false; } const on = R.mode === 'map' || R.mode === 'scene'; show('menuBtn', on); }
 
   // ---------- party stats ----------
   function stats(id, lv = S.lv) { const a = ALLY[id]; const k = ['hp', 'mp', 'atk', 'def', 'mag', 'spd']; const o = {}; k.forEach((n, i) => o[n] = Math.round(a.b[i] + a.g[i] * (lv - 1))); return o; }
@@ -433,15 +433,22 @@ const G = (() => {
     shopkeeper: true,
   };
   function drawMap(dt) {
+    const big = !!(ROOMS.level && ROOMS.level.big); if (document.body.classList.contains('bigmap') !== big) document.body.classList.toggle('bigmap', big);
     const arrived = ROOMS.update(dt, MAPINFO); ROOMS.draw(ctx, R.t, dt, MAPINFO);
     if (arrived && R.mode === 'map') { const done = isDone(arrived); enterNode(arrived, done); }
   }
-  cv.addEventListener('click', ev => {
-    if (R.mode !== 'map' || $('ovl').children.length) return;
-    ROOMS.tap(ev.clientX, ev.clientY, MAPINFO);
-  });
+  // input della mappa: tocco = vai lì, trascinamento = joystick, minimappa = mappa grande
+  const mapInput = () => R.mode === 'map' && !$('ovl').children.length;
+  let ptr = null;
+  cv.addEventListener('pointerdown', ev => { if (!mapInput() || ptr !== null) return; ptr = ev.pointerId; try { cv.setPointerCapture(ev.pointerId); } catch (e) { } ROOMS.pointer('down', ev.clientX, ev.clientY, MAPINFO); });
+  cv.addEventListener('pointermove', ev => { if (ev.pointerId !== ptr) return; ROOMS.pointer('move', ev.clientX, ev.clientY, MAPINFO); });
+  cv.addEventListener('pointerup', ev => { if (ev.pointerId !== ptr) return; ptr = null; if (mapInput()) ROOMS.pointer('up', ev.clientX, ev.clientY, MAPINFO); else ROOMS.pointer('cancel'); });
+  cv.addEventListener('pointercancel', ev => { if (ev.pointerId !== ptr) return; ptr = null; ROOMS.pointer('cancel'); });
+  addEventListener('keydown', ev => { if (!mapInput() || ev.repeat && !/^Arrow|Key[WASD]/.test(ev.code)) return; if (ROOMS.key(ev.code, true, MAPINFO)) ev.preventDefault(); });
+  addEventListener('keyup', ev => { ROOMS.key(ev.code, false, MAPINFO); });
+  addEventListener('blur', () => ROOMS.releaseKeys());
   async function enterNode(n, done) {
-    AUDIO.sfx('select'); S.mapAt = n.id;
+    ROOMS.releaseKeys(); AUDIO.sfx('select'); S.mapAt = n.id;
     if (n.type === 'shop') return shop(n);
     if (done && n.type !== 'camp') { toast('Già visitato'); return; }
     if (n.type === 'battle') { $('mapHead').innerHTML = ''; const r = await battle(n.battle, true); if (r === 'win') S.done[S.ch + ':' + n.id] = 1; return openMap(n.id); }
