@@ -34,8 +34,8 @@ G.chapter({
     ayame: { name:'Ayame', base:'noble', color:'#f4d6e0' },
     altra: { name:"L'Altra Mira", base:'villager', color:'#4b2b6b' },
     lise: { name:'Lise', base:'child', color:'#cfe3ff' },
-    hotaru: { name:'Hotaru', base:'villager', color:'#f2c14e' },
-    sayo: { name:'Maestra Sayo', base:'elder', color:'#e8b4b8' },
+    hotaru: { name:'Hotaru', base:'villager', color:'#c8642e' },
+    sayo: { name:'Maestra Sayo', base:'elder', color:'#c4c0cc' },
     daichi: { name:'Daichi', base:'guard', color:'#a89c8a' },
   },
   enemies: {
@@ -826,7 +826,7 @@ G.chapter({
       {if:"f.malachar_spared || f.malachar_pact", then:[
         {sfx:'explosion'}, {fx:'flash'},
         "Un boato attraversa la roccia. Dalla volta dell'abisso, lungo il pozzo della scala, scendono fasci di luce bianca: i riflettori dell'Armata di Ferro.",
-        "Catene d'acciaio si srotolano nel vuoto. Lungo le catene scivolano soldati con lanterne a etere legate al petto. E in testa a tutti, un uomo con un mantello nero e un occhio solo.",
+        "Catene d'acciaio si srotolano nel vuoto. Lungo le catene scivolano soldati con lanterne a etere legate al petto. E in testa a tutti, un uomo con un mantello nero e un occhio solo, l'altro coperto da una benda: il regalo della Tempesta.",
         {if:"f.malachar_pact", then:[
           "@malachar Cartografa. Abbiamo un patto, ricordi? Sono venuto a riscuotere. Ma prima ammazziamo il mostro. Gli affari si fanno a battaglia finita.",
         ], else:[

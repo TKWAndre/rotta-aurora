@@ -293,19 +293,31 @@ const ART = (() => {
   // ---------- portraits ----------
   const LOOK = {
     mira: { skin: '#f3cfae', hair: '#c4552c', hs: 'bob', cloth: '#26406e', cloth2: '#e0a03c', eye: '#2fb7a8', rim: '#ffcf7a', extra: ['goggles', 'scarf'] },
-    kai: { skin: '#e6bf98', hair: '#17151f', hs: 'topknot', cloth: '#5a1a26', cloth2: '#1a1016', eye: '#e8a33a', rim: '#ff6a6a', extra: ['scar', 'kimono'] },
-    otto: { skin: '#c98e62', hair: '#f2cf55', hs: 'messy', cloth: '#6a4a2a', cloth2: '#3a6a5a', eye: '#5ce05c', rim: '#7cf0c0', extra: ['goggles_eyes', 'overalls'] },
-    bram: { robot: 1, cloth: '#3a4a46', cloth2: '#6a7a70', eye: '#6ff4ff', rim: '#6ff4ff' },
+    // cicatrice sottile sul collo (c1, c4), kimono scuro consumato, codino nero
+    kai: { skin: '#e6bf98', hair: '#17151f', hs: 'topknot', cloth: '#5a1a26', cloth2: '#1a1016', eye: '#e8a33a', rim: '#ff6a6a', extra: ['neckscar', 'kimono'] },
+    // ragazza robusta, occhialoni da saldatore sulla fronte, sempre sporca di grasso, chiave inglese Gertrude
+    otto: { skin: '#c98e62', hair: '#f2cf55', hs: 'messy', cloth: '#6a4a2a', cloth2: '#3a6a5a', eye: '#5ce05c', rim: '#7cf0c0', gog: '#ffb05a', extra: ['goggles', 'overalls', 'grease', 'big', 'wrench'] },
+    // pietra grigia e bronzo verde, muschio, occhi d'ambra, un fiore sulla testa
+    bram: { robot: 1, cloth: '#3a4a46', cloth2: '#6a7a70', eye: '#ffb347', rim: '#ffcf7a', flower: 1 },
     nuvola: { cloud: 1, eye: '#7ab8ff', rim: '#bfe0ff' },
-    sable: { skin: '#ead6c8', hair: '#dcdcea', hs: 'long_side', cloth: '#1b1a2a', cloth2: '#6a3aa0', eye: '#b07cff', rim: '#b07cff', extra: ['highcollar'] },
-    malachar: { skin: '#d6b096', hair: '#6c6c76', hs: 'slick', cloth: '#262c36', cloth2: '#c9a24a', eye: '#8ad0ff', rim: '#7fd1ff', extra: ['beard', 'epaulettes', 'monocle'], old: 1 },
-    vedova: { skin: '#e6dce8', hair: '#140a18', hs: 'long', cloth: '#160a1c', cloth2: '#ff4d8d', eye: '#ff4d8d', rim: '#ff4d8d', extra: ['veil', 'shards'] },
-    raiden: { skin: '#d6ae86', hair: '#e8e4e0', hs: 'topknot', cloth: '#6a1414', cloth2: '#ffb000', eye: '#ffb000', rim: '#ffb000', extra: ['beard', 'armor'], old: 1 },
+    // capelli corti neri, neo sul labbro, guanti neri sottili
+    sable: { skin: '#ead6c8', hair: '#17141c', hs: 'short', cloth: '#1b1a2a', cloth2: '#6a3aa0', eye: '#b07cff', rim: '#b07cff', glove: '#16141c', extra: ['highcollar', 'gloves', 'mole'] },
+    // alto, spalle larghe, cappotto blu, capelli grigi raccolti, cicatrice sul sopracciglio, guanti; in c9 un occhio solo
+    malachar: { skin: '#d6b096', hair: '#9a9aa4', hs: 'bun', cloth: '#24365a', cloth2: '#c9a24a', eye: '#8ad0ff', rim: '#7fd1ff', glove: '#1a1a22', extra: ['browscar', 'epaulettes', 'gloves', 'big'], old: 1,
+      by: { c9: { cloth: '#15151c', extra: ['browscar', 'patch', 'gloves', 'highcollar', 'big'] } } },
+    // veli neri, maniche di schegge, maschera di vetro scuro senza occhi; in c9 (risparmiata) a volto scoperto
+    vedova: { skin: '#e6dce8', hair: '#140a18', hs: 'long', cloth: '#160a1c', cloth2: '#ff4d8d', eye: '#ff4d8d', rim: '#ff4d8d', extra: ['veil', 'shards', 'darkmask'],
+      by: { c9: { hair: '#8a8690', extra: ['veil', 'shards', 'burn', 'tears'] } } },
+    // capelli bianchi ma viso giovane (quello di Kai), armatura completa, elmo col sole spezzato, pupille senza riflesso
+    raiden: { skin: '#e2bc96', hair: '#ece8e2', hs: 'topknot', cloth: '#2a1416', cloth2: '#ffb000', eye: '#3a2a2a', rim: '#ffb000', crest: 'sun', extra: ['armor', 'kabuto', 'deadeyes'] },
     revuoto: { void: 1, eye: '#ffffff', rim: '#c08aff' },
     elise: { skin: '#f0d2bb', hair: '#e8e3dc', hs: 'bun', cloth: '#4a3a5a', cloth2: '#c9a24a', eye: '#2fb7a8', rim: '#ffe4a8', extra: ['glasses', 'shawl'], old: 1 },
-    grinza: { skin: '#c4a07c', hair: '#2a2a20', hs: 'bald', cloth: '#3a3f2a', cloth2: '#8a2a1a', eye: '#ff3a2a', rim: '#ff8844', extra: ['scar', 'epaulettes'] },
-    pip: { skin: '#f3c9a0', hair: '#8a5a2b', hs: 'messy', cloth: '#4b6a3b', cloth2: '#c98a3a', eye: '#4aa8aa', rim: '#ffd27a', extra: ['cap'], child: 1 },
-    hanzo: { skin: '#cfa47e', hair: '#c8c8c8', hs: 'bald', cloth: '#2a3a4a', cloth2: '#8aa0b0', eye: '#9fd8d0', rim: '#9fd8d0', extra: ['longbeard'], old: 1 },
+    // c1-c2: massiccio, rasato, cicatrice, baffi impomatati e monocolo; c4-c6: bendato, cappellaccio; c8+: calvo, cicatrice a uncino, niente baffi
+    grinza: { skin: '#c4a07c', hair: '#2a2a20', hs: 'bald', cloth: '#3a3f2a', cloth2: '#8a2a1a', eye: '#ff3a2a', rim: '#ff8844', extra: ['scar', 'epaulettes', 'mustache', 'monocle', 'big'],
+      by: { c4: { cloth: '#4a4436', cloth2: '#6a5a40', extra: ['headwrap', 'mustache', 'hat', 'big'] }, c8: { cloth: '#5a5a48', cloth2: '#8a6a3a', extra: ['hookscar', 'apron', 'big'] } } },
+    pip: { skin: '#f3c9a0', hair: '#8a5a2b', hs: 'messy', cloth: '#4b6a3b', cloth2: '#c98a3a', eye: '#4aa8aa', rim: '#ffd27a', extra: ['cap', 'grease'], child: 1 },
+    // piccolo, magro come un ramo, un occhio velato di bianco, spada di legno
+    hanzo: { skin: '#cfa47e', hair: '#c8c8c8', hs: 'bald', cloth: '#2a3a4a', cloth2: '#8aa0b0', eye: '#9fd8d0', rim: '#9fd8d0', extra: ['longbeard', 'cloudeye', 'kimono', 'tiny'], old: 1 },
     guard: { skin: '#d8b090', hair: '#3a2a1a', hs: 'short', cloth: '#3a3a52', cloth2: '#c9a24a', eye: '#6a8aff', rim: '#ffcf7a', extra: ['helmet'] },
     soldier: { skin: '#c8a888', hair: '#222', hs: 'short', cloth: '#2c3138', cloth2: '#7fd1ff', eye: '#7fd1ff', rim: '#7fd1ff', extra: ['visor'] },
     monk: { skin: '#e0d6e2', hair: '#000', hs: 'bald', cloth: '#1a0f20', cloth2: '#ff4d8d', eye: '#ff4d8d', rim: '#d9b0ff', extra: ['hood', 'mask'] },
@@ -316,19 +328,81 @@ const ART = (() => {
     noble: { skin: '#f0d8c4', hair: '#d8b060', hs: 'long', cloth: '#3a1a4a', cloth2: '#ffcf6a', eye: '#4a8aff', rim: '#ffd88a', extra: ['highcollar'] },
     samurai: { skin: '#d8b088', hair: '#111', hs: 'topknot', cloth: '#3a2020', cloth2: '#c9a24a', eye: '#d0a060', rim: '#ff8a5a', extra: ['armor'] },
   };
-  function lookFor(id, npc) { if (LOOK[id]) return LOOK[id]; if (npc) { const b = Object.assign({}, LOOK[npc.base] || LOOK.villager); if (npc.color) { b.cloth = npc.color; b.rim = npc.color; } return b; } return LOOK.villager; }
+  // dettagli dei personaggi secondari, presi dalle descrizioni nella storia (si sommano alla loro base)
+  const NPCLOOK = {
+    fosco: { extra: ['beard', 'blind', 'scarf'] },                                         // lampionaio cieco
+    notaio: { hs: 'short', hair: '#4a3a3a', extra: ['highcollar', 'umbrella'] },             // redingote viola, ombrello chiuso
+    fenn: { hs: 'bun', hair: '#8a5a3a', extra: ['shawl'] },                                  // Madama Fenn
+    ruggine: { hair: '#6a6e78', cloth: '#5a4a3a', extra: ['fullbeard', 'glasseye', 'cap', 'big'] }, // vecchio enorme, barba color ferro, occhio di vetro verde
+    tosca: { hair: '#dcdcdc', hs: 'bun', old: 1, extra: ['shawl', 'pipe', 'tiny'] },          // donna minuscola con la pipa
+    nico: { extra: ['grease'] },                                                             // pieno di fuliggine
+    cricca: { hair: '#2a1020', extra: ['feathers'] },                                        // avvolta in piume di struzzo nere
+    martello: { extra: ['helmet', 'big'] },                                                   // grande come un armadio
+    bullone: { dog: 1, eye: '#ffe27a', rim: '#ffc860' },                                     // cane di latta: caldaie, teiera per testa
+    germoglio: { sprout: 1, eye: '#ffd88a', rim: '#8fe3a0' },                                 // automa di rame verde e radici
+    esploratrice: { hs: 'short', hair: '#4a3020', extra: ['scope', 'bandarm'] },            // lente telescopica su un occhio, braccio ferito
+    recluta: { skin: '#f2e2d6', extra: ['helmet'] },                                         // pallidissimo, elmo troppo grande
+    doganiere: { extra: ['hat', 'mustache'] },                                               // cappello troppo grande, baffi
+    lina: { hs: 'braids', hair: '#9a6232' },                                                                  // bambina con le trecce
+    zia: { hs: 'bun', extra: ['shawl'] },
+    sagara: { hair: '#9a9aa0', old: 1, extra: ['armor', 'kabuto'] },                         // armatura di lacca rossa, capelli grigi
+    diacono: { extra: ['hood', 'mask', 'cracked'] },                                          // maschera di vetro incrinata
+    prigioniero: { extra: ['apron'] },                                                       // grembiule di cuoio
+    soma: { crest: 'sun', extra: ['armor', 'kabuto'] },                                      // sole spezzato sul petto
+    naufraga: { hair: '#d0d0d0', hs: 'bun', old: 1, extra: ['shawl'] },                      // Lisette, anziana
+    barcaiolo: { hair: '#cfd4da', cloth: '#8a949e', extra: ['hood', 'slate', 'beard'] },      // mantello color nebbia, ardesia al collo
+    eco: { extra: ['ghost'] },                                                               // naufraghi svuotati, trasparenti
+    hotaru: { cloth: '#a8502a', extra: ['hood', 'freckles'] },                                // cappuccio color ruggine, lentiggini
+    sayo: { cloth: '#c4c0cc', hs: 'bun', extra: ['kimono', 'tiny'] },                         // minuta, kimono grigio perla
+    juro: { crest: 'antlers', extra: ['armor', 'kabuto'] },                                   // elmo a corna di cervo
+    ume: { hs: 'bun', hair: '#e0e0e0', extra: ['shawl', 'lantern'] },                         // lanterna spenta al collo
+    ribelle: { extra: ['hood'] },
+    lacca: { extra: ['armor', 'helmet'] },
+    kenta: { extra: ['armor'] },                                                             // resti dell'armatura di lacca
+    lampionaio: { cloth: '#3a3a42', extra: ['faceless', 'widehat', 'scarf'] },               // senza volto, cappello a tesa larga
+    ayame: { hair: '#17151f', hs: 'bun', extra: ['kimono', 'heronclip'] },                    // fermaglio d'argento ad airone
+    altra: { mirror: 'mira', extra: ['goggles', 'scarf', 'voideyes'] },                     // l'Altra Mira: occhi neri interi
+    lise: { hair: '#f0e8d8', extra: ['ghost'] },                                              // spirito di bambina
+    daichi: { extra: ['ghost'] },                                                             // spirito in armatura
+  };
+  // capitolo corrente (impostato dal motore) per gli aspetti che cambiano con la storia
+  let chOf = () => null; const LC = {};
+  const chN = c => +String(c).replace(/\D/g, '') || 0;
+  let NP = {};
+  function look(id, npc) {
+    npc = npc || NP[id];
+    const ch = chOf(), key = id + '|' + (ch || '') + '|' + (npc ? npc.base + npc.color : '');
+    if (LC[key]) return LC[key];
+    const o = NPCLOOK[id];
+    let L;
+    if (o && o.mirror) L = Object.assign({}, LOOK[o.mirror], { rim: npc?.color || '#4b2b6b' });
+    else if (LOOK[id]) L = Object.assign({}, LOOK[id]);
+    else if (npc) { L = Object.assign({}, LOOK[npc.base] || LOOK.villager); if (npc.color) { L.cloth = npc.color; L.rim = npc.color; } }
+    else L = Object.assign({}, LOOK.villager);
+    if (o) { const { mirror, ...rest } = o; Object.assign(L, rest); }
+    let tag = id;
+    const by = L.by; delete L.by;
+    if (by && ch) { const ks = Object.keys(by).filter(k => chN(k) <= chN(ch)).sort((a, b) => chN(a) - chN(b)); const k = ks.pop(); if (k) { Object.assign(L, by[k]); tag += '@' + k; } }
+    if (npc && !LOOK[id]) tag += '~' + (npc.color || '');
+    L.extra = L.extra || []; L._k = tag;
+    return LC[key] = L;
+  }
+  const lookFor = look;
 
   function drawPortrait(ctx, id, mood, cx, by, scale, t, alpha = 1, npc) {
     if (id === 'voice') return;
     const L = lookFor(id, npc);
     ctx.save(); ctx.globalAlpha = alpha; ctx.translate(cx, by);
     const br = 1 + Math.sin(t * 2.2) * .008; ctx.scale(scale, scale * br); ctx.translate(-150, -380);
-    if (L.child) { ctx.translate(150, 380); ctx.scale(.86, .86); ctx.translate(-150, -380); }
+    const zs = L.child ? .86 : L.extra.includes('tiny') ? .9 : L.extra.includes('big') ? 1.06 : 1; if (zs !== 1) { ctx.translate(150, 380); ctx.scale(zs, zs); ctx.translate(-150, -380); }
+    if (L.extra.includes('ghost')) { ctx.globalAlpha *= .62; glowCircle(ctx, 150, 180, 180, '#aaccff', .35); }
     // aura glow
     glowCircle(ctx, 150, 200, 210, L.rim, .18);
     if (L.robot) drawRobot(ctx, L, mood, t);
     else if (L.cloud) drawCloudChild(ctx, L, mood, t);
     else if (L.void) drawVoidKing(ctx, L, mood, t);
+    else if (L.dog) drawTinDog(ctx, L, mood, t);
+    else if (L.sprout) drawSprout(ctx, L, mood, t);
     else drawHuman(ctx, L, mood, t);
     ctx.restore();
   }
@@ -365,6 +439,7 @@ const ART = (() => {
     if (L.old) { ctx.strokeStyle = hex(shade(L.skin, -.4), .4); ctx.lineWidth = 1.2; ctx.beginPath(); ctx.moveTo(112, 168); ctx.quadraticCurveTo(118, 176, 116, 186); ctx.moveTo(188, 168); ctx.quadraticCurveTo(182, 176, 184, 186); ctx.moveTo(125, 94); ctx.lineTo(175, 94); ctx.stroke(); }
     drawFace(ctx, L, mood, t);
     if (ex.includes('scar')) { ctx.strokeStyle = hex('#a04040', .8); ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(172, 112); ctx.lineTo(186, 160); ctx.stroke(); }
+    if (ex.includes('fullbeard')) { const g = ctx.createLinearGradient(0, 150, 0, 300); g.addColorStop(0, L.hair); g.addColorStop(1, shade(L.hair, -.3)); ctx.fillStyle = g; ctx.beginPath(); ctx.moveTo(94, 140); ctx.quadraticCurveTo(96, 210, 120, 260); ctx.quadraticCurveTo(150, 300, 180, 260); ctx.quadraticCurveTo(204, 210, 206, 140); ctx.quadraticCurveTo(190, 176, 150, 178); ctx.quadraticCurveTo(110, 176, 94, 140); ctx.closePath(); ctx.ellipse(150, 196, 18, 9, 0, 0, TAU); ctx.fill('evenodd'); ctx.strokeStyle = hex(shade(L.hair, .25), .5); ctx.lineWidth = 1.5; for (let i = 0; i < 7; i++) { ctx.beginPath(); ctx.moveTo(112 + i * 13, 214); ctx.quadraticCurveTo(114 + i * 12, 240, 124 + i * 9, 262); ctx.stroke(); } }
     if (ex.includes('beard')) { ctx.fillStyle = L.hair; ctx.beginPath(); ctx.moveTo(110, 180); ctx.quadraticCurveTo(150, 262, 190, 180); ctx.quadraticCurveTo(170, 214, 150, 212); ctx.quadraticCurveTo(130, 214, 110, 180); ctx.fill(); }
     if (ex.includes('longbeard')) { ctx.fillStyle = L.hair; ctx.beginPath(); ctx.moveTo(112, 186); ctx.quadraticCurveTo(150, 340, 188, 186); ctx.quadraticCurveTo(150, 222, 112, 186); ctx.fill(); }
     if (ex.includes('mustache')) { ctx.fillStyle = L.hair; ctx.beginPath(); ctx.moveTo(150, 186); ctx.quadraticCurveTo(126, 180, 116, 196); ctx.quadraticCurveTo(132, 188, 150, 192); ctx.quadraticCurveTo(168, 188, 184, 196); ctx.quadraticCurveTo(174, 180, 150, 186); ctx.fill(); }
@@ -377,10 +452,10 @@ const ART = (() => {
     if (hs === 'long') { ctx.beginPath(); ctx.moveTo(86, 150); ctx.quadraticCurveTo(80, 48, 150, 44); ctx.quadraticCurveTo(220, 48, 214, 150); ctx.quadraticCurveTo(190, 92, 150, 90); ctx.quadraticCurveTo(110, 92, 86, 150); ctx.fill(); }
     if (hs === 'slick') { ctx.beginPath(); ctx.moveTo(90, 124); ctx.quadraticCurveTo(88, 50, 150, 48); ctx.quadraticCurveTo(212, 50, 210, 124); ctx.quadraticCurveTo(196, 80, 150, 80); ctx.quadraticCurveTo(104, 80, 90, 124); ctx.fill(); ctx.strokeStyle = hex('#ffffff', .2); ctx.lineWidth = 1.5; for (let i = 0; i < 4; i++) { ctx.beginPath(); ctx.moveTo(110 + i * 20, 62); ctx.quadraticCurveTo(140 + i * 18, 58, 160 + i * 14, 76); ctx.stroke(); } }
     if (hs === 'bun') { ctx.beginPath(); ctx.moveTo(90, 130); ctx.quadraticCurveTo(86, 52, 150, 50); ctx.quadraticCurveTo(214, 52, 210, 130); ctx.quadraticCurveTo(200, 84, 150, 82); ctx.quadraticCurveTo(100, 84, 90, 130); ctx.fill(); ctx.beginPath(); ctx.arc(150, 42, 24, 0, TAU); ctx.fill(); }
-    if (hs === 'short') { ctx.beginPath(); ctx.moveTo(90, 124); ctx.quadraticCurveTo(86, 50, 150, 48); ctx.quadraticCurveTo(214, 50, 210, 124); ctx.lineTo(196, 96); ctx.lineTo(176, 100); ctx.lineTo(150, 88); ctx.lineTo(124, 100); ctx.lineTo(104, 96); ctx.closePath(); ctx.fill(); }
+    if (hs === 'short' || hs === 'braids') { ctx.beginPath(); ctx.moveTo(90, 124); ctx.quadraticCurveTo(86, 50, 150, 48); ctx.quadraticCurveTo(214, 50, 210, 124); ctx.lineTo(196, 96); ctx.lineTo(176, 100); ctx.lineTo(150, 88); ctx.lineTo(124, 100); ctx.lineTo(104, 96); ctx.closePath(); ctx.fill(); }
     if (hs !== 'bald' && !ex.includes('hood')) { ctx.beginPath(); ctx.ellipse(130, 66, 26, 6, -.3, 0, TAU); ctx.fillStyle = hex('#ffffff', .12); ctx.fill(); }
     // headwear
-    if (ex.includes('goggles')) { ctx.fillStyle = '#4a3020'; ctx.fillRect(92, 74, 116, 10); [[124, 72], [176, 72]].forEach(([x, y]) => { ctx.fillStyle = '#8a6a3a'; ctx.beginPath(); ctx.arc(x, y, 16, 0, TAU); ctx.fill(); ctx.fillStyle = hex('#7fe8ff', .8); ctx.beginPath(); ctx.arc(x, y, 11, 0, TAU); ctx.fill(); ctx.fillStyle = '#fff'; ctx.beginPath(); ctx.arc(x - 4, y - 4, 3, 0, TAU); ctx.fill(); }); }
+    if (ex.includes('goggles')) { ctx.fillStyle = '#4a3020'; ctx.fillRect(92, 74, 116, 10); [[124, 72], [176, 72]].forEach(([x, y]) => { ctx.fillStyle = '#8a6a3a'; ctx.beginPath(); ctx.arc(x, y, 16, 0, TAU); ctx.fill(); ctx.fillStyle = hex(L.gog || '#7fe8ff', .8); ctx.beginPath(); ctx.arc(x, y, 11, 0, TAU); ctx.fill(); ctx.fillStyle = '#fff'; ctx.beginPath(); ctx.arc(x - 4, y - 4, 3, 0, TAU); ctx.fill(); }); }
     if (ex.includes('goggles_eyes')) { ctx.fillStyle = '#2a2018'; ctx.fillRect(90, 80, 120, 9); [[126, 76], [174, 76]].forEach(([x, y]) => { ctx.fillStyle = '#b08a4a'; ctx.beginPath(); ctx.arc(x, y, 15, 0, TAU); ctx.fill(); ctx.fillStyle = hex('#ffb05a', .85); ctx.beginPath(); ctx.arc(x, y, 10, 0, TAU); ctx.fill(); }); }
     if (ex.includes('helmet')) { ctx.fillStyle = '#5a5a6a'; ctx.beginPath(); ctx.moveTo(84, 120); ctx.quadraticCurveTo(84, 40, 150, 40); ctx.quadraticCurveTo(216, 40, 216, 120); ctx.lineTo(200, 110); ctx.quadraticCurveTo(150, 92, 100, 110); ctx.fill(); ctx.fillStyle = L.cloth2; ctx.fillRect(146, 30, 8, 30); }
     if (ex.includes('visor')) { ctx.fillStyle = '#20242c'; ctx.beginPath(); ctx.moveTo(84, 130); ctx.quadraticCurveTo(84, 40, 150, 40); ctx.quadraticCurveTo(216, 40, 216, 130); ctx.fill(); ctx.fillStyle = hex(L.cloth2, .9); ctx.fillRect(100, 116, 100, 14); glowCircle(ctx, 150, 123, 60, L.cloth2, .3); }
@@ -389,10 +464,97 @@ const ART = (() => {
     if (ex.includes('cap')) { ctx.fillStyle = '#5a4030'; ctx.beginPath(); ctx.ellipse(150, 80, 70, 40, 0, Math.PI, 0); ctx.fill(); ctx.beginPath(); ctx.ellipse(186, 82, 40, 8, .1, 0, TAU); ctx.fill(); }
     if (ex.includes('glasses')) { ctx.strokeStyle = '#c9a24a'; ctx.lineWidth = 2; ctx.beginPath(); ctx.arc(126, 142, 15, 0, TAU); ctx.moveTo(189, 142); ctx.arc(174, 142, 15, 0, TAU); ctx.moveTo(141, 142); ctx.lineTo(159, 142); ctx.stroke(); }
     if (ex.includes('monocle')) { ctx.strokeStyle = '#c9a24a'; ctx.lineWidth = 2.5; ctx.beginPath(); ctx.arc(174, 142, 16, 0, TAU); ctx.stroke(); ctx.beginPath(); ctx.moveTo(188, 150); ctx.quadraticCurveTo(200, 200, 190, 260); ctx.stroke(); }
+    drawMarks(ctx, L, mood, t);
     if (ex.includes('veil')) { ctx.fillStyle = hex('#140a18', .55); ctx.beginPath(); ctx.moveTo(84, 90); ctx.quadraticCurveTo(150, 30, 216, 90); ctx.lineTo(214, 132); ctx.quadraticCurveTo(150, 120, 86, 132); ctx.fill(); }
   }
+  // segni particolari del ritratto (sopra il volto)
+  function drawMarks(ctx, L, m, t) {
+    const ex = L.extra, has = e => ex.includes(e);
+    const line = (col, w, pts) => { ctx.strokeStyle = col; ctx.lineWidth = w; ctx.lineCap = 'round'; ctx.beginPath(); pts.forEach(([x, y], i) => i ? ctx.lineTo(x, y) : ctx.moveTo(x, y)); ctx.stroke(); };
+    const SC = hex('#a03a3a', .85);
+    if (has('grease')) { ctx.fillStyle = hex('#2a2220', .55); ctx.beginPath(); ctx.ellipse(112, 176, 16, 6, -.4, 0, TAU); ctx.fill(); ctx.beginPath(); ctx.ellipse(120, 184, 8, 3, -.3, 0, TAU); ctx.fill(); }
+    if (has('freckles')) { ctx.fillStyle = hex(shade(L.skin, -.35), .7); [[108, 166], [116, 172], [100, 172], [112, 160], [184, 166], [192, 172], [200, 166], [188, 160]].forEach(([x, y]) => { ctx.beginPath(); ctx.arc(x, y, 2, 0, TAU); ctx.fill(); }); }
+    if (has('mole')) { ctx.fillStyle = '#3a1e24'; ctx.beginPath(); ctx.arc(170, 200, 2.6, 0, TAU); ctx.fill(); }
+    if (has('neckscar')) line(SC, 2.2, [[164, 222], [172, 236], [178, 252]]);
+    if (has('browscar')) line(SC, 2.6, [[178, 104], [184, 122], [190, 136]]);
+    if (has('hookscar')) line(SC, 3, [[108, 70], [100, 92], [104, 110], [120, 114]]);
+    if (has('tears')) { ctx.fillStyle = hex('#9ad8ff', .6); [[118, 160], [182, 162]].forEach(([x, y]) => { ctx.beginPath(); ctx.ellipse(x, y + 10, 3, 14, 0, 0, TAU); ctx.fill(); }); }
+    if (has('burn')) { ctx.save(); ctx.globalAlpha *= .55; const g = ctx.createRadialGradient(182, 150, 4, 182, 150, 50); g.addColorStop(0, '#b05a5a'); g.addColorStop(1, hex('#c88080', 0)); ctx.fillStyle = g; ctx.beginPath(); ctx.moveTo(150, 92); ctx.quadraticCurveTo(214, 100, 208, 170); ctx.quadraticCurveTo(196, 214, 158, 222); ctx.quadraticCurveTo(170, 150, 150, 92); ctx.fill(); ctx.restore(); }
+    if (has('glasseye')) { glowCircle(ctx, 174, 142, 34, '#5aff8a', .45 + .2 * Math.sin(t * 5)); ctx.fillStyle = '#2ab060'; ctx.beginPath(); ctx.arc(174, 143, 10, 0, TAU); ctx.fill(); ctx.fillStyle = '#b8ffcc'; ctx.beginPath(); ctx.arc(174, 143, 4, 0, TAU); ctx.fill(); ctx.strokeStyle = '#6a6e74'; ctx.lineWidth = 3; ctx.beginPath(); ctx.arc(174, 143, 13, 0, TAU); ctx.stroke(); }
+    if (has('cloudeye')) { ctx.fillStyle = hex('#eef4f6', .92); ctx.beginPath(); ctx.arc(174, 143, 9, 0, TAU); ctx.fill(); }
+    if (has('blind')) { ctx.fillStyle = L.skin; [126, 174].forEach(x => { ctx.beginPath(); ctx.ellipse(x, 142, 14, 14, 0, 0, TAU); ctx.fill(); }); line('#3a2a22', 3, [[114, 144], [126, 148], [138, 144]]); line('#3a2a22', 3, [[162, 144], [174, 148], [186, 144]]); }
+    if (has('scope')) { ctx.strokeStyle = '#8a6a2a'; ctx.lineWidth = 4; ctx.beginPath(); ctx.moveTo(108, 142); ctx.lineTo(84, 120); ctx.stroke(); ctx.fillStyle = '#c9a24a'; ctx.beginPath(); ctx.arc(126, 142, 19, 0, TAU); ctx.fill(); const g = ctx.createRadialGradient(122, 138, 2, 126, 142, 14); g.addColorStop(0, '#d8f4ff'); g.addColorStop(1, '#2a5a8a'); ctx.fillStyle = g; ctx.beginPath(); ctx.arc(126, 142, 13, 0, TAU); ctx.fill(); }
+    if (has('patch')) { ctx.fillStyle = '#121016'; line('#121016', 4, [[110, 130], [92, 112]]); line('#121016', 4, [[142, 132], [204, 96]]); ctx.beginPath(); ctx.ellipse(126, 144, 18, 15, 0, 0, TAU); ctx.fill(); }
+    if (has('headwrap')) { ctx.fillStyle = '#ece4d2'; ctx.beginPath(); ctx.moveTo(90, 96); ctx.quadraticCurveTo(150, 78, 210, 96); ctx.lineTo(210, 116); ctx.quadraticCurveTo(150, 98, 90, 116); ctx.fill(); ctx.beginPath(); ctx.moveTo(96, 110); ctx.lineTo(118, 106); ctx.lineTo(152, 158); ctx.lineTo(132, 166); ctx.fill(); ctx.strokeStyle = hex('#a89880', .8); ctx.lineWidth = 1.5; for (let i = 0; i < 4; i++) { ctx.beginPath(); ctx.moveTo(100 + i * 26, 100 - (i % 2) * 3); ctx.lineTo(112 + i * 26, 112); ctx.stroke(); } ctx.fillStyle = hex('#a03a3a', .5); ctx.beginPath(); ctx.arc(188, 104, 5, 0, TAU); ctx.fill(); }
+    if (has('darkmask')) { const g = ctx.createLinearGradient(100, 90, 200, 220); g.addColorStop(0, '#3a2a44'); g.addColorStop(.5, '#120a18'); g.addColorStop(1, '#2a1a30'); ctx.fillStyle = g; ctx.beginPath(); ctx.moveTo(96, 100); ctx.quadraticCurveTo(150, 84, 204, 100); ctx.quadraticCurveTo(210, 206, 150, 226); ctx.quadraticCurveTo(90, 206, 96, 100); ctx.fill(); rimStroke(ctx, L.rim, 1.5); ctx.fillStyle = hex('#ffffff', .18); ctx.beginPath(); ctx.ellipse(124, 124, 10, 30, -.3, 0, TAU); ctx.fill(); }
+    if (has('cracked')) line(hex('#3a2a3a', .9), 2, [[160, 100], [150, 130], [164, 150], [154, 182]]);
+    if (has('faceless')) { const g = ctx.createLinearGradient(90, 0, 210, 0); g.addColorStop(0, '#b8b8c0'); g.addColorStop(.5, '#a0a0a8'); g.addColorStop(1, '#7a7a84'); ctx.fillStyle = g; ctx.beginPath(); ctx.ellipse(150, 152, 58, 78, 0, 0, TAU); ctx.fill(); }
+    if (has('widehat')) { ctx.fillStyle = '#26222c'; ctx.beginPath(); ctx.ellipse(150, 84, 124, 20, 0, 0, TAU); ctx.fill(); ctx.fillStyle = '#34303c'; ctx.beginPath(); ctx.moveTo(96, 84); ctx.quadraticCurveTo(100, 22, 150, 20); ctx.quadraticCurveTo(200, 22, 204, 84); ctx.fill(); ctx.fillStyle = '#6a5a3a'; ctx.fillRect(98, 66, 104, 9); }
+    if (has('kabuto')) {
+      const g = ctx.createLinearGradient(80, 0, 220, 0); g.addColorStop(0, shade(L.cloth, .2)); g.addColorStop(1, shade(L.cloth, -.3)); ctx.fillStyle = g;
+      ctx.beginPath(); ctx.moveTo(80, 124); ctx.quadraticCurveTo(80, 36, 150, 34); ctx.quadraticCurveTo(220, 36, 220, 124); ctx.lineTo(206, 112); ctx.quadraticCurveTo(150, 94, 94, 112); ctx.fill(); rimStroke(ctx, L.rim, 1.5);
+      ctx.beginPath(); ctx.moveTo(80, 120); ctx.lineTo(56, 168); ctx.lineTo(90, 150); ctx.moveTo(220, 120); ctx.lineTo(244, 168); ctx.lineTo(210, 150); ctx.fill();
+      ctx.fillStyle = '#e8c25a';
+      if (L.crest === 'sun') { ctx.beginPath(); ctx.arc(150, 40, 34, Math.PI, 0); ctx.fill(); ctx.strokeStyle = shade(L.cloth, -.4); ctx.lineWidth = 4; ctx.beginPath(); ctx.moveTo(150, 8); ctx.lineTo(142, 24); ctx.lineTo(156, 30); ctx.lineTo(148, 42); ctx.stroke(); for (let i = 0; i < 7; i++) { const a = Math.PI + (i + .5) / 7 * Math.PI; ctx.beginPath(); ctx.moveTo(150 + Math.cos(a) * 36, 40 + Math.sin(a) * 36); ctx.lineTo(150 + Math.cos(a) * 50, 40 + Math.sin(a) * 50); ctx.strokeStyle = '#e8c25a'; ctx.lineWidth = 3; ctx.stroke(); } }
+      else if (L.crest === 'antlers') { ctx.strokeStyle = '#8a6a44'; ctx.lineWidth = 6; ctx.lineCap = 'round'; [-1, 1].forEach(s => { ctx.beginPath(); ctx.moveTo(150 + s * 20, 44); ctx.quadraticCurveTo(150 + s * 50, 10, 150 + s * 80, -30); ctx.moveTo(150 + s * 46, 14); ctx.lineTo(150 + s * 36, -16); ctx.moveTo(150 + s * 64, -6); ctx.lineTo(150 + s * 82, 4); ctx.stroke(); }); }
+      else { ctx.beginPath(); ctx.moveTo(110, 44); ctx.quadraticCurveTo(150, 10, 190, 44); ctx.quadraticCurveTo(150, 30, 110, 44); ctx.fill(); }
+    }
+    if (has('heronclip')) { ctx.fillStyle = '#e8eef6'; ctx.beginPath(); ctx.moveTo(176, 50); ctx.quadraticCurveTo(200, 30, 222, 40); ctx.lineTo(206, 44); ctx.quadraticCurveTo(196, 52, 186, 60); ctx.fill(); ctx.strokeStyle = '#c0c8d4'; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(214, 40); ctx.lineTo(232, 34); ctx.stroke(); }
+    if (has('pipe')) { ctx.strokeStyle = '#5a3a1a'; ctx.lineWidth = 5; ctx.beginPath(); ctx.moveTo(160, 196); ctx.quadraticCurveTo(190, 206, 204, 202); ctx.stroke(); ctx.fillStyle = '#6a4a2a'; ctx.fillRect(198, 184, 14, 20); ctx.fillStyle = hex('#d8d8e0', .4); for (let i = 0; i < 3; i++) { ctx.beginPath(); ctx.arc(208 + Math.sin(t * 2 + i) * 6, 170 - i * 18, 7 + i * 2, 0, TAU); ctx.fill(); } }
+    if (has('feathers')) { for (let i = 0; i < 26; i++) { const a = i / 25, x = 30 + a * 240, y = 268 + Math.sin(a * Math.PI) * -18 + (i % 2) * 8; ctx.fillStyle = i % 3 ? '#1c1418' : '#3a2c34'; ctx.beginPath(); ctx.ellipse(x, y, 16, 9, (i % 2 ? .6 : -.6), 0, TAU); ctx.fill(); } }
+    if (has('slate')) { ctx.strokeStyle = '#8a6a4a'; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(130, 240); ctx.lineTo(120, 300); ctx.moveTo(170, 240); ctx.lineTo(180, 300); ctx.stroke(); ctx.fillStyle = '#2a3038'; ctx.fillRect(108, 298, 84, 56); ctx.strokeStyle = '#8a6a4a'; ctx.lineWidth = 4; ctx.strokeRect(108, 298, 84, 56); ctx.fillStyle = '#e8e8e0'; ctx.font = 'bold 16px serif'; ctx.textAlign = 'center'; ctx.fillText('…', 150, 330); }
+    if (has('lantern')) { ctx.strokeStyle = '#3a3446'; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(136, 244); ctx.lineTo(150, 290); ctx.lineTo(164, 244); ctx.stroke(); ctx.fillStyle = '#4a4438'; ctx.fillRect(138, 290, 24, 30); ctx.fillStyle = '#8a8070'; ctx.fillRect(142, 294, 16, 22); }
+    if (has('apron')) { const g = ctx.createLinearGradient(0, 280, 0, 380); g.addColorStop(0, '#7a5a3a'); g.addColorStop(1, '#4a3420'); ctx.fillStyle = g; ctx.beginPath(); ctx.moveTo(112, 290); ctx.lineTo(188, 290); ctx.lineTo(196, 380); ctx.lineTo(104, 380); ctx.fill(); }
+    if (has('bandarm')) { ctx.fillStyle = '#efe8dc'; ctx.beginPath(); ctx.ellipse(52, 320, 30, 18, -.5, 0, TAU); ctx.fill(); ctx.strokeStyle = '#c8bca8'; ctx.lineWidth = 1.5; for (let i = 0; i < 3; i++) { ctx.beginPath(); ctx.moveTo(30 + i * 14, 330 - i * 6); ctx.lineTo(42 + i * 14, 304 - i * 6); ctx.stroke(); } }
+    if (has('gloves')) { ctx.fillStyle = L.glove || '#16141c'; [[40, 370], [260, 370]].forEach(([x, y]) => { ctx.beginPath(); ctx.ellipse(x, y, 20, 12, 0, 0, TAU); ctx.fill(); }); }
+    if (L.hs === 'braids') { ctx.fillStyle = L.hair; [92, 208].forEach(x => { for (let i = 0; i < 6; i++) { ctx.beginPath(); ctx.ellipse(x, 160 + i * 18, 11 - i * .6, 10, 0, 0, TAU); ctx.fill(); } }); ctx.fillStyle = L.cloth2; [92, 208].forEach(x => ctx.fillRect(x - 7, 262, 14, 6)); }
+  }
+  // Bullone: ritratto del cane di latta (teiera, occhi a lampadina, collare con targhetta)
+  function drawTinDog(ctx, L, m, t) {
+    const metal = (x0, x1) => { const g = ctx.createLinearGradient(x0, 0, x1, 0); g.addColorStop(0, '#c4ccd2'); g.addColorStop(.45, '#8a929a'); g.addColorStop(1, '#4a5058'); return g; };
+    const tilt = m === 'sad' || m === 'hurt' ? -.12 : m === 'happy' ? .05 * Math.sin(t * 8) : 0;
+    // corpo: caldaia
+    ctx.fillStyle = metal(20, 280); ctx.beginPath(); ctx.ellipse(150, 360, 140, 80, 0, Math.PI, 0); ctx.fill(); rimStroke(ctx, L.rim, 2);
+    ctx.fillStyle = '#b8823a'; [70, 150, 230].forEach(x => ctx.fillRect(x - 5, 290, 10, 90));
+    glowCircle(ctx, 150, 350, 40, '#ff9a3a', .5 + .2 * Math.sin(t * 3)); ctx.fillStyle = '#ffb05a'; ctx.fillRect(132, 340, 36, 14);
+    // collare e targhetta
+    ctx.fillStyle = '#7a2a2a'; ctx.fillRect(84, 262, 132, 18); ctx.fillStyle = '#e8c25a'; ctx.beginPath(); ctx.arc(150, 292, 15, 0, TAU); ctx.fill(); ctx.fillStyle = '#5a4010'; ctx.font = 'bold 8px sans-serif'; ctx.textAlign = 'center'; ctx.fillText('BULLONE', 150, 295);
+    ctx.save(); ctx.translate(150, 170); ctx.rotate(tilt); ctx.translate(-150, -170);
+    // manico (orecchio) e beccuccio (muso)
+    ctx.strokeStyle = '#5a6068'; ctx.lineWidth = 12; ctx.beginPath(); ctx.arc(66, 160, 34, Math.PI * .6, Math.PI * 1.45); ctx.stroke();
+    ctx.fillStyle = metal(200, 280); ctx.beginPath(); ctx.moveTo(214, 180); ctx.quadraticCurveTo(260, 170, 276, 120); ctx.lineTo(288, 126); ctx.quadraticCurveTo(272, 196, 214, 214); ctx.fill();
+    // teiera
+    ctx.fillStyle = metal(70, 230); ctx.beginPath(); ctx.ellipse(150, 170, 88, 72, 0, 0, TAU); ctx.fill(); rimStroke(ctx, L.rim, 2);
+    ctx.fillStyle = '#7a828a'; ctx.beginPath(); ctx.ellipse(150, 104, 54, 14, 0, 0, TAU); ctx.fill(); ctx.fillStyle = '#b8823a'; ctx.beginPath(); ctx.arc(150, 88, 12, 0, TAU); ctx.fill();
+    // fiocco rosso
+    ctx.fillStyle = '#d03a3a'; ctx.beginPath(); ctx.moveTo(196, 108); ctx.lineTo(222, 92); ctx.lineTo(220, 122); ctx.closePath(); ctx.moveTo(196, 108); ctx.lineTo(170, 92); ctx.lineTo(172, 122); ctx.closePath(); ctx.fill();
+    // occhi a lampadina
+    const lit = m === 'sad' ? .45 : m === 'hurt' ? .3 + .3 * Math.abs(Math.sin(t * 9)) : 1;
+    [118, 182].forEach(x => { glowCircle(ctx, x, 160, 34, L.eye, .5 * lit); ctx.fillStyle = hex('#fff6c0', .4 + .6 * lit); ctx.beginPath(); ctx.arc(x, 160, 17, 0, TAU); ctx.fill(); ctx.strokeStyle = '#4a4e56'; ctx.lineWidth = 4; ctx.stroke(); ctx.strokeStyle = hex('#c87a2a', .9); ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(x - 6, 166); ctx.lineTo(x - 3, 156); ctx.lineTo(x, 166); ctx.lineTo(x + 3, 156); ctx.lineTo(x + 6, 166); ctx.stroke(); });
+    // griglia della bocca e lingua di cuoio
+    ctx.fillStyle = '#2a2e34'; ctx.fillRect(124, 196, 52, 14); ctx.fillStyle = '#8a929a'; for (let i = 0; i < 5; i++) ctx.fillRect(128 + i * 10, 196, 3, 14);
+    if (m === 'happy') { ctx.fillStyle = '#8a4a2a'; ctx.beginPath(); ctx.ellipse(150, 218, 12, 16, 0, 0, TAU); ctx.fill(); }
+    ctx.restore();
+  }
+  // Germoglio: ritratto dell'automa giardiniere
+  function drawSprout(ctx, L, m, t) {
+    const cu = (x0, x1) => { const g = ctx.createLinearGradient(x0, 0, x1, 0); g.addColorStop(0, '#8ac8a4'); g.addColorStop(.5, '#5f9a7c'); g.addColorStop(1, '#3a6a54'); return g; };
+    // radici sulle spalle
+    ctx.strokeStyle = '#6a4a2e'; ctx.lineWidth = 9; ctx.lineCap = 'round'; for (let i = 0; i < 6; i++) { ctx.beginPath(); ctx.moveTo(150, 260); ctx.quadraticCurveTo(150 + (i - 2.5) * 50, 290, 150 + (i - 2.5) * 70, 380); ctx.stroke(); }
+    ctx.fillStyle = cu(60, 240); ctx.beginPath(); ctx.ellipse(150, 330, 92, 62, 0, Math.PI, 0); ctx.lineTo(242, 380); ctx.lineTo(58, 380); ctx.fill(); rimStroke(ctx, L.rim, 2);
+    // annaffiatoio (braccio sinistro)
+    ctx.fillStyle = '#4f8a6c'; ctx.fillRect(16, 300, 56, 50); ctx.beginPath(); ctx.moveTo(20, 304); ctx.lineTo(-10, 262); ctx.lineTo(0, 256); ctx.lineTo(32, 300); ctx.fill(); ctx.fillStyle = '#bfe8ff'; for (let i = 0; i < 4; i++) { ctx.beginPath(); ctx.arc(-6 + Math.sin(t * 4 + i) * 3, 270 + ((t * 40 + i * 12) % 50), 2.4, 0, TAU); ctx.fill(); }
+    // testa
+    ctx.fillStyle = cu(80, 220); ctx.beginPath(); ctx.ellipse(150, 168, 82, 74, 0, 0, TAU); ctx.fill(); rimStroke(ctx, L.rim, 2);
+    ctx.strokeStyle = hex('#2a4a3a', .6); ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(74, 170); ctx.lineTo(226, 170); ctx.stroke(); ctx.fillStyle = '#c88a4a'; [[86, 170], [214, 170]].forEach(([x, y]) => { ctx.beginPath(); ctx.arc(x, y, 5, 0, TAU); ctx.fill(); });
+    // germoglio in testa
+    ctx.strokeStyle = '#4a8a3a'; ctx.lineWidth = 5; ctx.beginPath(); ctx.moveTo(150, 96); ctx.quadraticCurveTo(146, 70, 152, 50); ctx.stroke(); ctx.fillStyle = '#6ac25a'; [[-1, 0], [1, 1]].forEach(([s, k]) => { ctx.beginPath(); ctx.ellipse(150 + s * 22, 60 - k * 10, 22, 10, s * .5 + Math.sin(t * 2) * .08, 0, TAU); ctx.fill(); });
+    // occhi tondi come lanterne di carta
+    [118, 182].forEach(x => { glowCircle(ctx, x, 160, 40, '#ffd88a', .45); ctx.fillStyle = '#fff1c8'; ctx.beginPath(); ctx.ellipse(x, 160, 22, 26, 0, 0, TAU); ctx.fill(); ctx.strokeStyle = hex('#c8a060', .7); ctx.lineWidth = 1.5; for (let i = -2; i <= 2; i++) { ctx.beginPath(); ctx.ellipse(x, 160, 22 - Math.abs(i) * 4, 26, 0, 0, TAU); ctx.stroke(); } ctx.fillStyle = m === 'sad' ? '#7a6a4a' : '#5a3a1a'; ctx.beginPath(); ctx.arc(x, m === 'happy' ? 156 : 164, m === 'surprised' ? 5 : 8, 0, TAU); ctx.fill(); });
+    ctx.strokeStyle = '#2a4a3a'; ctx.lineWidth = 3; ctx.beginPath(); if (m === 'sad' || m === 'hurt') { ctx.moveTo(136, 214); ctx.quadraticCurveTo(150, 206, 164, 214); } else { ctx.moveTo(134, 206); ctx.quadraticCurveTo(150, 218, 166, 206); } ctx.stroke();
+  }
   function drawFace(ctx, L, m, t) {
-    if (L.extra.includes('visor') || L.extra.includes('mask')) return;
+    if (['visor', 'mask', 'darkmask', 'faceless'].some(e => L.extra.includes(e))) return;
     const blink = (Math.sin(t * 1.3) > .985) || (Math.sin(t * 0.7 + 1) > .995);
     const ey = 142, lx = 126, rx = 174;
     // brows
@@ -407,7 +569,8 @@ const ART = (() => {
       const ig = ctx.createRadialGradient(x, ey + 2, 1, x, ey, ir); ig.addColorStop(0, shade(L.eye, .4)); ig.addColorStop(1, shade(L.eye, -.3));
       ctx.fillStyle = ig; ctx.beginPath(); ctx.arc(x, ey + 1, ir, 0, TAU); ctx.fill();
       ctx.fillStyle = '#120a10'; ctx.beginPath(); ctx.arc(x, ey + 1, ir * .45, 0, TAU); ctx.fill();
-      ctx.fillStyle = '#fff'; ctx.beginPath(); ctx.arc(x - 3, ey - 3, 2.6, 0, TAU); ctx.fill();
+      if (L.extra.includes('voideyes')) { ctx.fillStyle = '#07040b'; ctx.beginPath(); ctx.ellipse(x, ey, 12, h, 0, 0, TAU); ctx.fill(); ctx.fillStyle = hex('#7a4aff', .5); ctx.beginPath(); ctx.arc(x - 3, ey - 3, 2, 0, TAU); ctx.fill(); }
+      else if (!L.extra.includes('deadeyes')) { ctx.fillStyle = '#fff'; ctx.beginPath(); ctx.arc(x - 3, ey - 3, 2.6, 0, TAU); ctx.fill(); }
       ctx.strokeStyle = '#2a1a1a'; ctx.lineWidth = 3; ctx.beginPath(); ctx.ellipse(x, ey, 12, h, 0, Math.PI * 1.1, Math.PI * 1.9); ctx.stroke();
       if (m === 'angry' || m === 'serious') { ctx.fillStyle = shade(L.skin, -.05); ctx.fillRect(x - 13, ey - h - 2, 26, 5); }
     };
@@ -442,6 +605,7 @@ const ART = (() => {
     const op = (Math.sin(t * 1.1) > .99) ? .2 : 1;
     ctx.fillStyle = hex(vc, op); ctx.fillRect(108, 134, 30, m === 'serious' ? 5 : 10); ctx.fillRect(162, 134, 30, m === 'serious' ? 5 : 10); glowCircle(ctx, 123, 139, 30, vc, .5 * op); glowCircle(ctx, 177, 139, 30, vc, .5 * op);
     ctx.fillStyle = hex(L.eye, .5); for (let i = 0; i < 5; i++) ctx.fillRect(120 + i * 13, 196, 6, 3);
+    if (L.flower) { ctx.strokeStyle = '#4a8a3a'; ctx.lineWidth = 4; ctx.beginPath(); ctx.moveTo(176, 56); ctx.quadraticCurveTo(180, 36, 186, 22); ctx.stroke(); ctx.fillStyle = '#ffb6d0'; for (let i = 0; i < 5; i++) { const a = i / 5 * TAU + t * .3; ctx.beginPath(); ctx.ellipse(186 + Math.cos(a) * 9, 18 + Math.sin(a) * 9, 8, 5, a, 0, TAU); ctx.fill(); } ctx.fillStyle = '#fff2a0'; ctx.beginPath(); ctx.arc(186, 18, 5, 0, TAU); ctx.fill(); }
   }
   function drawCloudChild(ctx, L, m, t) {
     ctx.save(); ctx.translate(0, Math.sin(t * 1.5) * 6);
@@ -487,6 +651,7 @@ const ART = (() => {
     const eye = (ex, ey, r = 5) => { glowCircle(ctx, ex, ey, r * 4, col, .6); ctx.fillStyle = hurt ? '#fff' : col; ctx.beginPath(); ctx.arc(ex, ey, r, 0, TAU); ctx.fill(); };
     const body = (g0, g1) => { const gr = ctx.createLinearGradient(0, -80, 0, 80); gr.addColorStop(0, g0); gr.addColorStop(1, g1); return gr; };
     ctx.fillStyle = body(mid, dark);
+    if (look[0] === '@') look = 'samurai'; else if (look === 'moth' || look === 'spark') look = 'drone';
     switch (look) {
       case 'drone': ctx.translate(0, bob * 2); ctx.beginPath(); ctx.arc(0, 0, 34, 0, TAU); ctx.fill(); rimStroke(ctx, col, 2); ctx.strokeStyle = hex(col, .6); ctx.lineWidth = 3; ctx.beginPath(); ctx.ellipse(0, -30, 50, 8 * Math.abs(Math.sin(t * 20)), 0, 0, TAU); ctx.stroke(); eye(0, 4, 10); ctx.fillStyle = dark; ctx.fillRect(-4, 30, 8, 18); ctx.fillRect(-30, 18, 6, 22); ctx.fillRect(24, 18, 6, 22); break;
       case 'soldier': ctx.beginPath(); ctx.moveTo(-30, 80); ctx.lineTo(-36, -10); ctx.quadraticCurveTo(-30, -40, 0, -42); ctx.quadraticCurveTo(30, -40, 36, -10); ctx.lineTo(30, 80); ctx.fill(); ctx.beginPath(); ctx.arc(0, -58, 20, 0, TAU); ctx.fill(); rimStroke(ctx, col, 2); ctx.fillStyle = hex(col, .9); ctx.fillRect(-14, -62, 28, 6); glowCircle(ctx, 0, -59, 24, col, .4); ctx.fillStyle = dark; ctx.save(); ctx.rotate(-.5); ctx.fillRect(10, -20, 70, 8); ctx.restore(); break;
@@ -513,5 +678,5 @@ const ART = (() => {
     }
   }
 
-  return { BG, prepare, drawBg, drawPortrait, drawEnemy, glowCircle, hex, LOOK, star };
+  return { BG, prepare, drawBg, drawPortrait, drawEnemy, glowCircle, hex, LOOK, NPCLOOK, look, setChapter: f => { chOf = f; }, setNpcs: n => { NP = n; }, star };
 })();

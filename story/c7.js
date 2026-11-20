@@ -30,7 +30,7 @@ G.chapter({
   },
   enemies: {
     c7_eco: { name:'Eco Smarrita', lv:15, role:'caster', look:'wraith', color:'#cfd8e6', skills:['drain','stun','strike'] },
-    c7_falena: { name:'Falena di Cenere', lv:14, role:'fast', look:'beast', color:'#e8e2d4', skills:['multi','poison','strike'] },
+    c7_falena: { name:'Falena di Cenere', lv:14, role:'fast', look:'moth', color:'#e8e2d4', skills:['multi','poison','strike'] },
     c7_sentinella: { name:'Sentinella Spezzata', lv:15, role:'tank', look:'golem', color:'#9aa3ad', skills:['heavy','guard','strike'] },
     c7_relitto_vivo: { name:'Relitto Infestato', lv:15, role:'brute', look:'mech', color:'#7d8794', skills:['heavy','sweep','charge'] },
     c7_riflesso: { name:'Riflesso', lv:15, role:'fast', look:'wraith', color:'#eef4ff', skills:['strike','multi','drain'] },

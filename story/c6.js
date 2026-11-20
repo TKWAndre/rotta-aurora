@@ -38,7 +38,7 @@ G.chapter({
     c6_drone: { name:'Drone Parafulmine', lv:12, role:'tank', look:'drone', color:'#7fd1ff', skills:['strike','guard','charge'] },
     c6_marine: { name:'Fante del Leviatano', lv:13, role:'brute', look:'soldier', color:'#8a96a8', skills:['strike','heavy','guard'] },
     c6_cannoniere: { name:'Cannoniere di Ferro', lv:13, role:'caster', look:'mech', color:'#b98a5a', skills:['heavy','sweep','charge'] },
-    c6_fulminide: { name:'Fulminide', lv:13, role:'caster', look:'beast', color:'#e6ff6a', skills:['multi','stun','sweep'] },
+    c6_fulminide: { name:'Fulminide', lv:13, role:'caster', look:'spark', color:'#e6ff6a', skills:['multi','stun','sweep'] },
     c6_malachar: { name:'Ammiraglio Corvo Malachar', lv:14, role:'boss', look:'boss_admiral', color:'#2b3a55', skills:['heavy','sweep','guard','charge'] },
     c6_guardia_nera: { name:'Guardia Nera', lv:13, role:'tank', look:'soldier', color:'#3a3f4a', skills:['strike','guard','heal'] },
   },

@@ -39,7 +39,7 @@ G.chapter({
     c2_sergente: { name:'Sergente Chiodo', lv:5, role:'caster', look:'soldier', color:'#c9b46a', skills:['strike','heal','guard'] },
     c2_ratto: { name:'Ratto di Ferraglia', lv:3, role:'fast', look:'beast', color:'#a07a5a', skills:['strike','poison'] },
     c2_rottame: { name:'Rottame Senziente', lv:5, role:'tank', look:'golem', color:'#9a6b3f', skills:['strike','guard','heavy'] },
-    c2_campione: { name:'Martello il Campione', lv:6, role:'brute', look:'soldier', color:'#6f7682', skills:['heavy','charge','strike'] },
+    c2_campione: { name:'Martello il Campione', lv:6, role:'brute', look:'@martello', color:'#6f7682', skills:['heavy','charge','strike'] },
     c2_grinza: { name:'Capitano Grinza sulla Gru', lv:6, role:'boss', look:'boss_crane', color:'#e0a040', skills:['heavy','sweep','charge','guard'] },
   },
   battles: {
@@ -787,7 +787,7 @@ G.chapter({
       "Mastro Ruggine pende dall'artiglio, a testa in giù, e sta urlando una quantità impressionante di insulti.",
       "@ruggine:angry ...E tua madre era una pentola a pressione! Con la valvola rotta!",
       "@grinza:angry Qualcuno lo zittisca! Ah, no, aspettate. Abbiamo ospiti!",
-      "La porta della cabina si apre. Ne esce un uomo magro e lungo, in un'uniforme troppo stirata, con i baffi impomatati e un monocolo che continua a scivolargli via.",
+      "La porta della cabina si apre. Ne esce l'omone dell'hangar, la testa rasata lucida di sudore, in un'uniforme troppo stirata, con i baffi impomatati e un monocolo che continua a scivolargli via.",
       "@grinza:happy Ma guarda! La ragazzina della bussola! E il randagio con la spada! E... OTTAVIA BRASSE. Che giornata. Che giornata meravigliosa per la mia carriera.",
       {if:"f.saved_pip", then:[
         "@grinza:angry Per colpa tua ho fatto una figuraccia, a Lutèce. Un moccioso! Mi è scappato un moccioso, davanti a tutti! L'Ammiraglio ha riso. RISO! Di ME!",

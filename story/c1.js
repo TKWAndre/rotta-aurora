@@ -214,7 +214,7 @@ G.chapter({
       "@kai:serious[Sconosciuto] Sei pesante, per essere una che salta così male.",
       "@mira:surprised E tu chi sei?!",
       "@kai[Sconosciuto] Uno che passava di qui. Sui tetti. Di notte. Con una spada. Normalissimo.",
-      "Ha i capelli neri legati in un codino, un kimono scuro consumato e una cicatrice sottile sullo zigomo. Ti guarda come si guarda un problema.",
+      "Ha i capelli neri legati in un codino, un kimono scuro consumato e una cicatrice sottile sul collo. Ti guarda come si guarda un problema.",
       "@kai[Sconosciuto] Bella bussola, comunque.",
       "@mira:angry Come fai a... ehi! Ridammela!",
       "Te ne accorgi solo ora: la bussola è nella sua mano. Non sai quando l'ha presa.",

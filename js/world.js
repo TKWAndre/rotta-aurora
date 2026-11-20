@@ -61,7 +61,7 @@ const WORLD = (() => {
 
   // ---------------- walking character sprites ----------------
   function walker(ctx, id, x, y, sc, t, walking, face, npc, o = {}) {
-    const L = (ART.LOOK[id]) || (npc && Object.assign({}, ART.LOOK[npc.base] || ART.LOOK.villager, npc.color ? { cloth: npc.color } : {})) || ART.LOOK.villager;
+    const L = ART.look(id, npc);
     const ph = walking ? t * 9 : 0, sw = walking ? Math.sin(ph) : 0, bob = walking ? Math.abs(Math.cos(ph)) * 2.5 : Math.sin(t * 2) * .8;
     ctx.save(); ctx.translate(x, y); ctx.scale(sc * face, sc);
     // shadow

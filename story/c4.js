@@ -40,7 +40,7 @@ G.chapter({
     c4_sciacallo: { name:'Sciacallo di Nebbia', lv:8, role:'fast', look:'beast', color:'#9aa7b8', skills:['multi','poison'] },
     c4_borseggiatore: { name:'Borseggiatore', lv:8, role:'fast', look:'soldier', color:'#a08c6a', skills:['strike','poison','multi'] },
     c4_ashigaru: { name:'Ashigaru di Akatsuki', lv:9, role:'tank', look:'samurai', color:'#b03a2e', skills:['guard','strike'] },
-    c4_sagara: { name:'Sagara Tetsu', lv:10, role:'brute', look:'samurai', color:'#c0392b', skills:['heavy','charge','guard','strike'] },
+    c4_sagara: { name:'Sagara Tetsu', lv:10, role:'brute', look:'@sagara', color:'#c0392b', skills:['heavy','charge','guard','strike'] },
     c4_campanone: { name:'Campanone, Golem delle Campane', lv:10, role:'boss', look:'golem', color:'#7a6aa8', skills:['heavy','sweep','stun','charge'] },
   },
   battles: {
@@ -248,7 +248,7 @@ G.chapter({
       "Mira ride così forte che deve appoggiarsi a un palo. Per un attimo il mercato sembra solo una festa. Solo una festa in una notte lunga cent'anni.",
       "Poi una donna le urta la spalla. Mantello grigio perla, cappuccio, un mazzo di gigli di carta fra le braccia.",
       "@sable[Fioraia] Oh, perdonami, tesoro. Che sbadata. Un fiore per farmi perdonare? Si accendono, se ci soffi sopra.",
-      "Le mette un giglio di carta fra le dita. Ha i guanti grigi, sottili come pelle di serpente. Ha un sorriso che sembra provato allo specchio molte volte.",
+      "Le mette un giglio di carta fra le dita. Ha i guanti neri, sottili come pelle di serpente. Ha un sorriso che sembra provato allo specchio molte volte.",
       "@mira:happy Oh... grazie. È bellissimo.",
       "@sable[Fioraia] Lo so. Buona notte, cartografa.",
       "La donna si gira e scompare nella folla. Mira soffia sul giglio. Si accende davvero, una fiammella azzurra.",

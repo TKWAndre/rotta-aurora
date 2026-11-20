@@ -30,20 +30,20 @@ G.chapter({
       ['ponte','falo'],['ponte','palazzo'],['tempio','falo']]
   },
   npcs: {
-    hotaru: { name:'Hotaru', base:'villager', color:'#f2c14e' },
-    sayo: { name:'Maestra Sayo', base:'elder', color:'#e8b4b8' },
+    hotaru: { name:'Hotaru', base:'villager', color:'#c8642e' },
+    sayo: { name:'Maestra Sayo', base:'elder', color:'#c4c0cc' },
     juro: { name:'Capitano Jūrō', base:'samurai', color:'#9b2d30' },
     ume: { name:'Nonna Ume', base:'elder', color:'#b7a99a' },
     ribelle: { name:'Ribelle', base:'villager', color:'#c9a227' },
     lacca: { name:'Guardia di Lacca', base:'guard', color:'#a83232' },
-    kenta: { name:'Kenta', base:'soldier', color:'#8a8f99' },
+    kenta: { name:'Kenta', base:'soldier', color:'#a83a32' },
   },
   enemies: {
     c8_ashigaru: { name:'Ashigaru di Lacca', lv:16, role:'brute', look:'soldier', color:'#b03a2e', skills:['strike','heavy','guard'] },
     c8_lanterna: { name:'Lanterna Spia', lv:16, role:'caster', look:'drone', color:'#f5e6c8', skills:['strike','drain','stun'] },
     c8_samurai: { name:"Samurai dell'Ombra Vuota", lv:17, role:'fast', look:'samurai', color:'#3b2f4a', skills:['strike','multi','stun'] },
     c8_onryo: { name:'Onryō del Tributo', lv:17, role:'caster', look:'wraith', color:'#dfe6f0', skills:['drain','poison','stun'] },
-    c8_juro: { name:'Capitano Jūrō', lv:17, role:'tank', look:'samurai', color:'#9b2d30', skills:['heavy','guard','charge','strike'] },
+    c8_juro: { name:'Capitano Jūrō', lv:17, role:'tank', look:'@juro', color:'#9b2d30', skills:['heavy','guard','charge','strike'] },
     c8_raiden: { name:'Shōgun Tenjō Raiden', lv:18, role:'boss', look:'boss_shogun', color:'#c0392b', skills:['heavy','sweep','drain','charge'] },
   },
   battles: {

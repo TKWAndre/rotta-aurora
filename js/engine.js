@@ -524,7 +524,7 @@ const G = (() => {
     const n = B.allies.length, land = W > H;
     B.allies.forEach((a, i) => {
       const x = land ? W * (.07 + i * .095) + (i % 2) * 10 : W * (i + 1) / (n + 1), base = land ? H * .7 - (i % 2) * 14 : H * .64; const act = B.actor === a; const lunge = act ? 10 + Math.max(0, B.lunge || 0) * 40 : 0; a.sx = x; a.sy = base - 70;
-      const img = PIX.charSprite(a.id, ART.LOOK[a.id] || ART.LOOK.villager, land ? 2 : 1, act && B.lunge > 0 ? fr : 0);
+      const AL = ART.look(a.id), img = PIX.charSprite(AL._k, AL, land ? 2 : 1, act && B.lunge > 0 ? fr : 0);
       ctx.fillStyle = 'rgba(0,0,0,.35)'; ctx.fillRect(x - 6 * px, base - px, 12 * px, 2 * px);
       if (a.hp <= 0) { ctx.save(); ctx.globalAlpha = .45; ctx.translate(x, base); ctx.rotate(-Math.PI / 2); ctx.imageSmoothingEnabled = false; ctx.drawImage(img, -img.width / 2 * px, -img.height * px, img.width * px, img.height * px); ctx.restore(); }
       else { if (act) { ctx.fillStyle = `rgba(255,230,160,${.25 + .15 * Math.sin(R.t * 6)})`; ctx.fillRect(x - 8 * px, base - px, 16 * px, 2 * px); } blit(img, land ? x + lunge : x, land ? base : base - lunge, px, false); }
@@ -846,6 +846,7 @@ const G = (() => {
     }
     document.addEventListener('visibilitychange', () => { if (document.hidden) { autosave(); } });
     // debug hooks
+    ART.setChapter(() => S && S.ch); ART.setNpcs(NPCS);
     window.__G = { get S() { return S; }, openMapAt: (ch) => { S.ch = ch; openMap(); }, CH, SCENES, runScene: (id) => runScene(id, null), startChapter, newGame, fresh: () => { S = fresh(); healAll(); }, openMap, battle, gainXp, healAll, get R() { return R; }, visible: () => visibleNodes(), isDone: n => isDone(n), enter: id => { const n = CH[S.ch].map.nodes.find(x => x.id === id); if (n) enterNode(n, isDone(n)); }, playCine, CINE };
   }
   return { chapter, boot, cine, ending: () => { } };

@@ -33,7 +33,7 @@ G.chapter({
   },
   enemies: {
     c3_muschio: { name:'Guardiano di Muschio', lv:7, role:'tank', look:'golem', color:'#6fae6a', skills:['strike','guard','heavy'] },
-    c3_falena: { name:'Falena d\'Ombra', lv:6, role:'fast', look:'beast', color:'#7d6bb5', skills:['strike','poison','multi'] },
+    c3_falena: { name:'Falena d\'Ombra', lv:6, role:'fast', look:'moth', color:'#7d6bb5', skills:['strike','poison','multi'] },
     c3_spettro: { name:'Spettro di Nebbia', lv:7, role:'caster', look:'wraith', color:'#bcd4e6', skills:['drain','stun'] },
     c3_esploratore: { name:'Esploratore Svuotato', lv:7, role:'brute', look:'soldier', color:'#4a4458', skills:['strike','heavy','multi'] },
     c3_cecchino: { name:'Tiratore Svuotato', lv:7, role:'fast', look:'soldier', color:'#5b5070', skills:['strike','multi','stun'] },

@@ -278,7 +278,7 @@ const ROOMS = (() => {
   }
 
   // ---------------- draw ----------------
-  const lookOf = (id, def) => ART.LOOK[id] || (def ? Object.assign({}, ART.LOOK[def.base] || ART.LOOK.villager, def.color ? { cloth: def.color } : {}) : ART.LOOK.villager);
+  const lookOf = (id, def) => ART.look(id, def);
   function drawChar(img, x, y, dir) {
     x = Math.round(x); y = Math.round(y); img = MOD.volume(img, .8);
     b.fillStyle = 'rgba(0,0,0,.28)'; b.fillRect(x - 4, y - 1, 8, 2); b.fillRect(x - 2, y - 2, 4, 3);
@@ -309,7 +309,7 @@ const ROOMS = (() => {
         case 'lore': list.push({ y: py, f: () => b.drawImage(PIX.nodeSprite('lore', th, done ? 0 : Math.floor(t * 2) % 2), px - 20, py - 46) }); if (!done) lights.push({ x: px, y: py - 8, r: 26, col: '#c08aff' }); lbl.y = py - 22; break;
         case 'camp': shadows.push(() => MOD.shadowAt(b, PIX.nodeSprite('camp', th, 0), px - 20, py - 46, .25, 2)); list.push({ y: py, f: () => b.drawImage(MOD.volume(PIX.nodeSprite('camp', th, Math.floor(t * 9) % 3), .7), px - 20, py - 46) }); lights.push({ x: px, y: py - 6, r: 56 + Math.sin(t * 13) * 3 + Math.sin(t * 7) * 2, col: '#ff8a3a' }); lbl.y = py - 22; break;
         case 'shop': list.push({ y: py, f: () => { drawChar(PIX.charSprite('merchant', ART.LOOK.merchant, 0, 0), px, py - 7, 0); b.drawImage(PIX.nodeSprite('shop', th, 0), px - 20, py - 46); } }); lights.push({ x: px, y: py - 18, r: 40, col: '#ffcf7a' }); lbl.y = py - 34; break;
-        case 'side': { const npc = info.npcFor(n); const id = npc ? npc.id : 'villager'; const L = lookOf(id, npc && npc.def); const dx = me.x - px, dy = me.y - py; const dir = dist > 70 ? 0 : Math.abs(dx) > Math.abs(dy) ? (dx > 0 ? 2 : 3) : (dy > 0 ? 0 : 1); shadows.push(() => { const im = PIX.charSprite('npc_' + id, L, 0, 0); MOD.shadowAt(b, im, px - (im.width >> 1), py - im.height + 2, .3, 2); }); list.push({ y: py, f: () => { drawChar(PIX.charSprite('npc_' + id, L, dir === 3 ? 2 : dir, 0), px, py, dir); if (!done) b.drawImage(PIX.nodeSprite('bubble', th, 0), px - 20, py - 46 - 26 + Math.round(Math.sin(t * 5))); } }); lbl.y = py - 34; break; }
+        case 'side': { const npc = info.npcFor(n); const id = npc ? npc.id : 'villager'; const L = lookOf(id, npc && npc.def); const dx = me.x - px, dy = me.y - py; const dir = dist > 70 ? 0 : Math.abs(dx) > Math.abs(dy) ? (dx > 0 ? 2 : 3) : (dy > 0 ? 0 : 1); shadows.push(() => { const im = PIX.charSprite('npc_' + L._k, L, 0, 0); MOD.shadowAt(b, im, px - (im.width >> 1), py - im.height + 2, .3, 2); }); list.push({ y: py, f: () => { drawChar(PIX.charSprite('npc_' + L._k, L, dir === 3 ? 2 : dir, 0), px, py, dir); if (!done) b.drawImage(PIX.nodeSprite('bubble', th, 0), px - 20, py - 46 - 26 + Math.round(Math.sin(t * 5))); } }); lbl.y = py - 34; break; }
         case 'battle': { const e = info.enemiesFor(n)[0] || { look: 'soldier', color: '#ff6a6a' }; const ex = px + Math.round(Math.sin(t * 1.3 + x) * 9); const dir = Math.cos(t * 1.3 + x) > 0 ? 2 : 3; list.push({ y: py, f: () => { const img = MOD.volume(PIX.enemySprite(e.look, e.color || '#ff6a6a', fr4), .8); if (dir === 3) { b.save(); b.translate(ex, 0); b.scale(-1, 1); b.fillStyle = 'rgba(0,0,0,.3)'; b.fillRect(-5, py - 1, 10, 2); b.drawImage(img, -(img.width / 2), py - (img.height - 2)); b.restore(); } else { b.fillStyle = 'rgba(0,0,0,.3)'; b.fillRect(ex - 5, py - 1, 10, 2); b.drawImage(img, ex - img.width / 2, py - (img.height - 2)); } } }); lights.push({ x: ex, y: py - 10, r: 22, col: '#ff4a3a' }); lbl.x = ex; lbl.y = py - 34; break; }
       }
       labels.push(lbl);
@@ -325,7 +325,7 @@ const ROOMS = (() => {
       let pos = me;
       if (i > 0) { let need = i * 15, k = trail.length - 1, acc = 0, prev = me; pos = trail.length ? trail[0] : me; while (k >= 0) { const q = trail[k]; acc += Math.hypot(q.x - prev.x, q.y - prev.y); prev = q; if (acc >= need) { pos = q; break; } k--; } if (k < 0 && trail.length) pos = trail[0]; }
       const L = lookOf(id); const dir = pos.dir ?? 0; const fr = LV.walking ? (fr4 + i) % 4 : 0;
-      const spr = PIX.charSprite(id, L, dir === 3 ? 2 : dir, fr); shadows.push(() => MOD.shadowAt(b, spr, Math.round(pos.x) - (spr.width >> 1), Math.round(pos.y) - spr.height + 2, .3, 2, dir === 3));
+      const spr = PIX.charSprite(L._k, L, dir === 3 ? 2 : dir, fr); shadows.push(() => MOD.shadowAt(b, spr, Math.round(pos.x) - (spr.width >> 1), Math.round(pos.y) - spr.height + 2, .3, 2, dir === 3));
       list.push({ y: pos.y + (i ? -.1 * i : 0), f: () => drawChar(spr, pos.x, pos.y, dir) });
       if (id === 'nuvola') lights.push({ x: pos.x, y: pos.y - 14, r: 30, col: '#bfe0ff' });
     });

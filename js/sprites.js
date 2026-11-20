@@ -63,10 +63,12 @@
     const step = [0, 1, 0, -1][fr % 4], bob = fr % 2 ? -1 : 0;
     if (L.robot) return SPR[k] = outline2(robot(S, L, dir, step, bob).c);
     if (L.cloud) return SPR[k] = outline2(cloud(S, L, dir, fr).c, [70, 100, 170]);
+    if (L.dog) return SPR[k] = outline2(tinDog(S, L, dir, fr).c, [30, 22, 18]);
+    if (L.sprout) return SPR[k] = outline2(sprout(S, L, dir, step, bob).c, [20, 40, 30]);
     if (L.void) { for (let y = -36; y < 0; y++) { const w = Math.round(5 + Math.sin((y + 36) / 36 * Math.PI) * 5); for (let x = -w; x < w; x++) px(x, y + bob, (x + y) % 7 === 0 ? '#1a0e2a' : '#06030c'); } px(-2, -28 + bob, '#ffffff'); px(2, -28 + bob, '#ffffff'); return SPR[k] = outline2(S.c, [120, 70, 210]); }
     const ex = L.extra || [], has = e => ex.includes(e);
     const SK = ramp(L.skin), HR = ramp(L.hair), CL = ramp(L.cloth), C2 = ramp(L.cloth2), SH = ramp('#3a2a26');
-    const ch = L.child ? 5 : 0, bT = -19 + ch, hc = bT - 7; // torso top, head centre
+    const ch = L.child ? 5 : has('tiny') ? 3 : 0, bT = -19 + ch, hc = bT - 7; // torso top, head centre
     const robe = has('kimono') || has('hood') || has('veil');
     const PANTS = has('overalls') ? C2 : robe ? CL : ramp(L.old ? '#3a3440' : '#2c2a3a');
     // gambe
@@ -74,7 +76,7 @@
     if (dir === 2) { leg(-2 + step * 2, 0, PANTS.map((c, i) => PANTS[Math.max(0, i - 1)])); leg(-1 - step * 2, 0, PANTS); }
     else { leg(-4, step > 0 ? 1 : 0, PANTS); leg(1, step < 0 ? 1 : 0, PANTS); }
     // busto (cilindro morbido)
-    const bw = dir === 2 ? 9 : 12, bx = -Math.floor(bw / 2), bH = -bT - 6 + (robe ? 4 : 0);
+    const bw = (dir === 2 ? 9 : 12) + (has('big') ? 2 : 0) - (has('tiny') ? 1 : 0), bx = -Math.floor(bw / 2), bH = -bT - 6 + (robe ? 4 : 0);
     for (let y = 0; y < bH; y++) for (let x = 0; x < bw; x++) {
       const u = (x + .5) / bw, edge = (y === 0 && (x === 0 || x === bw - 1)); if (edge) continue;
       const t = .72 - u * .5 - (y > bH - 2 ? .18 : 0) + (y < 2 ? .1 : 0); px(bx + x, bT + y, tone(dir === 1 ? CL.map((c, i) => CL[Math.max(0, i - 1)]) : CL, t, x, y));
@@ -88,7 +90,7 @@
     if (has('highcollar') || has('shawl')) { for (let x = bx - 1; x <= bx + bw; x++) { px(x, bT - 1, C2[3]); px(x, bT, C2[2]); px(x, bT + 1, C2[1]); } }
     if (has('epaulettes')) { rect(bx - 1, bT, 3, 2, '#e0b84a'); px(bx - 1, bT, '#fff0a0'); rect(bx + bw - 2, bT, 3, 2, '#c9a24a'); }
     // braccia con oscillazione
-    const arm = (x, sw, R) => { for (let y = 0; y < 8; y++) { px(x, bT + 1 + y + sw, R[y < 2 ? 3 : 2]); px(x + 1, bT + 1 + y + sw, R[1]); } rect(x, bT + 9 + sw, 2, 2, SK[2]); px(x, bT + 9 + sw, SK[3]); };
+    const arm = (x, sw, R) => { for (let y = 0; y < 8; y++) { px(x, bT + 1 + y + sw, R[y < 2 ? 3 : 2]); px(x + 1, bT + 1 + y + sw, R[1]); } const HD = has('gloves') ? ramp(L.glove || '#1a1a22') : SK; rect(x, bT + 9 + sw, 2, 2, HD[2]); px(x, bT + 9 + sw, HD[3]); };
     if (dir === 2) arm(-1 + step, 0, CL);
     else { arm(bx - 2, step, CL); arm(bx + bw, -step, CL.map((c, i) => CL[Math.max(0, i - 1)])); }
     // sciarpa (dopo le braccia, con coda mossa)
@@ -98,7 +100,7 @@
     ball(0, hc + bob * 0, rx, ry, SK, .85);
     const H = (x, y) => px(x, y, null);
     // capelli: calotta ombreggiata + ciocche + riflesso
-    const hs = L.hs, hcap = hs === 'bald' ? 0 : hs === 'slick' || hs === 'short' ? 4.2 : 5;
+    const hs = L.hs, hcap = hs === 'bald' ? 0 : hs === 'slick' || hs === 'short' || hs === 'braids' ? 4.2 : 5;
     const hairPx = (x, y, t) => px(x, y, tone(HR, t, x, y));
     if (hs !== 'bald') {
       for (let y = Math.floor(-ry - 1); y <= Math.ceil(ry); y++) for (let x = Math.floor(-rx - 1); x <= Math.ceil(rx + 1); x++) {
@@ -111,6 +113,8 @@
         hairPx(x, hc + y, Math.max(0, Math.min(1, t)));
       }
       if (hs === 'messy') [[-6, -6], [-3, -8], [0, -9], [3, -8], [6, -6]].forEach(([x, y], i) => { hairPx(x, hc + y, .8); hairPx(x + 1, hc + y + 1, .55); if (i % 2) hairPx(x, hc + y - 1, .9); });
+      if (hs === 'braids' && dir !== 1) for (let y = 1; y < 10; y++) { const bx2 = dir === 2 ? [-6] : [-7, 7]; bx2.forEach(x => hairPx(x + (y % 2 ? 0 : (x < 0 ? 1 : -1)), hc + y, .55 - y / 30)); }
+      if (hs === 'braids' && dir === 1) for (let y = 1; y < 10; y++) { hairPx(-3, hc + y, .5); hairPx(3, hc + y, .4); }
       if (hs === 'topknot' || hs === 'bun') ball(dir === 2 ? -2 : 0, hc - ry - 2, 2.4, 2.2, HR, .9);
       if ((hs === 'long' || hs === 'long_side') && dir !== 0) for (let y = 0; y < 12; y++) for (let x = (dir === 2 ? -6 : -6); x <= (dir === 2 ? -2 : 6); x++) hairPx(x, hc + 2 + y, .5 - y / 30 - Math.abs(x) / 30);
       if ((hs === 'long') && dir === 0) for (let y = 0; y < 9; y++) { hairPx(-7, hc + 3 + y, .45); hairPx(-6, hc + 3 + y, .55); hairPx(6, hc + 3 + y, .3); hairPx(7, hc + 3 + y, .2); }
@@ -119,7 +123,7 @@
     // volto
     if (dir === 0) {
       const ey = hc + 1;
-      const eye = (x) => { if (L.old) { px(x, ey + 1, SK[0]); px(x + 1, ey + 1, SK[0]); return; } px(x, ey, '#1a1020'); px(x + 1, ey, '#1a1020'); px(x, ey + 1, L.eye); px(x + 1, ey + 1, '#1a1020'); px(x, ey + 2, ramp(L.eye)[1]); px(x + 1, ey + 2, ramp(L.eye)[3]); px(x, ey + 1, '#ffffff'); };
+      const eye = (x) => { if (has('voideyes')) { for (let yy = 0; yy < 3; yy++) { px(x, ey + yy, '#07040b'); px(x + 1, ey + yy, '#07040b'); } px(x + 1, ey + 1, '#2a1640'); return; } if (L.old) { px(x, ey + 1, SK[0]); px(x + 1, ey + 1, SK[0]); return; } px(x, ey, '#1a1020'); px(x + 1, ey, '#1a1020'); px(x, ey + 1, L.eye); px(x + 1, ey + 1, '#1a1020'); px(x, ey + 2, ramp(L.eye)[1]); px(x + 1, ey + 2, ramp(L.eye)[3]); if (!has('deadeyes')) px(x, ey + 1, '#ffffff'); };
       eye(-4); eye(2);
       px(-5, ey + 3, '#f08a8a'); px(4, ey + 3, '#f08a8a'); px(-1, ey + 4, SK[1]); px(0, ey + 4, SK[1]);
     } else if (dir === 2) {
@@ -128,7 +132,7 @@
     }
     // accessori della testa
     const fx = dir === 0 ? -5 : 1, fw = dir === 0 ? 11 : 6;
-    if (has('goggles')) { for (let x = -rx; x <= rx; x++) px(Math.round(x), hc - 3, '#5a3a1a'); if (dir !== 1) { const lens = (x) => { ball(x, hc - 3, 1.6, 1.4, ramp('#7fe0ff'), .8); px(x - 1, hc - 4, '#ffffff'); }; if (dir === 0) { lens(-3); lens(3); } else lens(3); } }
+    if (has('goggles')) { for (let x = -rx; x <= rx; x++) px(Math.round(x), hc - 3, '#5a3a1a'); if (dir !== 1) { const lens = (x) => { ball(x, hc - 3, 1.6, 1.4, ramp(L.gog || '#7fe0ff'), .8); px(x - 1, hc - 4, '#ffffff'); }; if (dir === 0) { lens(-3); lens(3); } else lens(3); } }
     if (has('goggles_eyes') && dir !== 1) { const lens = x => { ball(x, hc + 2, 1.8, 1.6, ramp('#c9a24a'), .9); px(x, hc + 2, '#7fff9a'); px(x - 1, hc + 1, '#d8ffd0'); }; if (dir === 0) { lens(-3); lens(3); for (let x = -1; x <= 1; x++) px(x, hc + 2, '#8a6a2a'); } else lens(3); }
     if (has('helmet')) for (let y = -ry - 1; y < -1; y++) for (let x = -rx - 1; x <= rx + 1; x++) { const nx = x / (rx + 1.5), ny = y / (ry + 1); if (nx * nx + ny * ny <= 1) px(Math.round(x), Math.round(hc + y), tone(ramp('#7c7c8c'), .65 - nx * .3 - ny * .2, x, y)); }
     if (has('visor') && dir !== 1) for (let x = fx; x < fx + fw; x++) { px(x, hc + 1, '#a8e8ff'); px(x, hc + 2, '#4aa8e0'); }
@@ -138,13 +142,16 @@
     if (has('veil')) for (let y = -ry - 1; y <= ry + 8; y++) for (let x = -rx - 1; x <= rx + 1; x++) { const nx = x / (rx + 1), side = Math.abs(nx) > .55 || y < -3 || dir === 1; if (side && (y < 0 ? nx * nx + (y / (ry + 1)) ** 2 <= 1 : Math.abs(nx) <= 1)) px(Math.round(x), Math.round(hc + y), tone(ramp('#1e1026'), .5 - nx * .3, x, y)); }
     if (has('hat')) { for (let x = -rx - 3; x <= rx + 3; x++) { px(Math.round(x), hc - 4, C2[1]); px(Math.round(x), hc - 3, C2[0]); } for (let y = -10; y < -4; y++) for (let x = -5; x <= 5; x++) px(x, hc + y, tone(C2, .65 - x / 12 - (y === -6 ? .3 : 0), x, y)); }
     if (has('cap')) { for (let y = -ry - 1; y < -2; y++) for (let x = -rx; x <= rx; x++) { const nx = x / (rx + .5), ny = y / (ry + 1); if (nx * nx + ny * ny <= 1) px(Math.round(x), Math.round(hc + y), tone(C2, .65 - nx * .3, x, y)); } if (dir === 0) for (let x = -5; x <= 5; x++) px(x, hc - 2, C2[0]); if (dir === 2) for (let x = 3; x <= 8; x++) px(x, hc - 2, C2[1]); }
-    if ((has('beard') || has('longbeard')) && dir !== 1) { const bh = has('longbeard') ? 8 : 3; for (let y = 0; y < bh; y++) for (let x = (dir === 0 ? -4 + (y >> 2) : 1); x <= (dir === 0 ? 4 - (y >> 2) : 5); x++) px(x, hc + 4 + y, tone(HR, .6 - y / bh * .3 - x / 20, x, y)); }
+    if ((has('beard') || has('longbeard') || has('fullbeard')) && dir !== 1) { const bh = has('longbeard') ? 8 : has('fullbeard') ? 6 : 3; for (let y = 0; y < bh; y++) for (let x = (dir === 0 ? -4 + (y >> 2) : 1); x <= (dir === 0 ? 4 - (y >> 2) : 5); x++) px(x, hc + 4 + y, tone(HR, .6 - y / bh * .3 - x / 20, x, y)); }
     if (has('mustache') && dir !== 1) for (let x = (dir === 0 ? -3 : 3); x <= (dir === 0 ? 3 : 6); x++) px(x, hc + 4, HR[1]);
     if (has('scar') && dir === 0) { px(2, hc - 1, '#c04a4a'); px(3, hc, '#c04a4a'); px(3, hc + 1, '#e07070'); }
     if (has('monocle') && dir === 0) { px(2, hc, '#e0b84a'); px(4, hc, '#e0b84a'); px(4, hc + 2, '#e0b84a'); px(5, hc + 3, '#e0b84a'); px(5, hc + 5, '#e0b84a'); }
     if (has('glasses') && dir === 0) { [-4, 2].forEach(x => { px(x - 1, hc + 1, '#c9a24a'); px(x + 2, hc + 1, '#c9a24a'); px(x, hc, '#c9a24a'); px(x + 1, hc, '#c9a24a'); }); px(0, hc + 1, '#c9a24a'); }
     if (has('shards')) { px(bx - 3, bT + 2, L.cloth2); px(bx + bw + 2, bT + 5, L.cloth2); px(bx - 2, bT + 7, '#ffffff'); }
-    return SPR[k] = outline2(S.c);
+    extras(S, L, has, { dir, hc, rx, ry, bT, bx, bw, belt, step, SK, HR, CL, C2 });
+    const out = outline2(S.c);
+    if (has('ghost')) { const g = out.getContext('2d'); g.globalCompositeOperation = 'source-atop'; g.fillStyle = 'rgba(170,205,255,.4)'; g.fillRect(0, 0, out.width, out.height); g.globalCompositeOperation = 'destination-in'; g.fillStyle = 'rgba(0,0,0,.62)'; g.fillRect(0, 0, out.width, out.height); g.globalCompositeOperation = 'source-over'; }
+    return SPR[k] = out;
   }
   function robot(S, L, dir, step, bob) {
     const { px, rect, ball, box } = S, M = ramp('#6a7a72'), D = ramp('#3a4844'), moss = ramp('#4a7a3a'), eye = L.eye;
@@ -159,7 +166,8 @@
     box(-6, -34 + bob, 12, 7, 2, M);
     if (dir === 0) { ball(-3, -29 + bob, 1.4, 1.2, ramp(eye), 1); ball(3, -29 + bob, 1.4, 1.2, ramp(eye), 1); px(-3, -30 + bob, '#ffffff'); px(3, -30 + bob, '#ffffff'); }
     else if (dir === 2) { ball(3, -29 + bob, 1.4, 1.2, ramp(eye), 1); px(3, -30 + bob, '#ffffff'); }
-    rect(0, -38 + bob, 1, 4, D[2]); px(0, -39 + bob, eye);
+    if (L.flower) { rect(0, -37 + bob, 1, 3, '#4a8a3a'); px(-1, -36 + bob, '#6aaa4a'); [[-1, -39], [1, -39], [0, -40], [0, -38]].forEach(([x, y]) => px(x, y + bob, '#ffb6d0')); px(0, -39 + bob, '#fff2a0'); }
+    else { rect(0, -38 + bob, 1, 4, D[2]); px(0, -39 + bob, eye); }
     // muschio
     [[-6, -34], [-5, -35], [4, -34], [-9, -22], [-8, -23], [7, -13]].forEach(([x, y], i) => px(x, y + (y < -30 ? bob : 0), moss[i % 2 ? 2 : 3]));
     return S;
@@ -173,10 +181,101 @@
     return S;
   }
 
+  // accessori e segni particolari descritti nella storia
+  function extras(S, L, has, o) {
+    const { px, rect, ball } = S, { dir, hc, rx, ry, bT, bx, bw, belt, step, SK, CL } = o, front = dir === 0, side = dir === 2, back = dir === 1;
+    const inHead = (x, y) => (x * x) / ((rx + .4) ** 2) + (y * y) / ((ry + .4) ** 2) <= 1;
+    const SCAR = '#b84646', SCAR2 = '#e07a7a';
+    // volto
+    if (has('grease') && !back) { px(front ? -5 : 4, hc + 2, '#3a2e28'); px(front ? -4 : 5, hc + 3, '#4a3c34'); px(front ? -5 : 4, hc + 3, '#55463c'); }
+    if (has('freckles') && front) { [[-5, 2], [-4, 3], [4, 2], [5, 3]].forEach(([x, y]) => px(x, hc + y, SK[0])); }
+    if (has('mole') && !back) px(front ? 2 : 4, hc + 5, '#3a1e24');
+    if (has('neckscar') && !back) { if (front) { px(4, hc + 5, SCAR); px(5, hc + 4, SCAR2); } else { px(-1, hc + 5, SCAR); px(0, hc + 4, SCAR2); } }
+    if (has('browscar') && !back) { const x = front ? 3 : 4; px(x, hc - 2, SCAR); px(x, hc - 1, SCAR2); px(x + 1, hc + 3, SCAR); }
+    if (has('hookscar') && !back) { const pts = front ? [[-4, -5], [-5, -4], [-5, -3], [-4, -2], [-3, -2]] : [[1, -5], [0, -4], [0, -3], [1, -2], [2, -2]]; pts.forEach(([x, y], i) => px(x, hc + y, i % 2 ? SCAR2 : SCAR)); }
+    if (has('glasseye') && !back) { const x = front ? 2 : 3; px(x, hc + 1, '#9affb0'); px(x + 1, hc + 1, '#3ad06a'); px(x, hc + 2, '#2aa050'); px(x + 1, hc + 2, '#7fff9a'); }
+    if (has('cloudeye') && !back) { const x = front ? 2 : 3; px(x, hc + 1, '#e8eef2'); px(x + 1, hc + 1, '#ffffff'); }
+    if (has('blind') && !back && !L.old) { [front ? -4 : 3, front ? 2 : 99].forEach(x => { if (x === 99) return; for (let yy = 0; yy < 3; yy++) { px(x, hc + 1 + yy, SK[2]); px(x + 1, hc + 1 + yy, SK[2]); } px(x, hc + 2, SK[0]); px(x + 1, hc + 2, SK[0]); }); }
+    if (has('tears') && front) { px(-4, hc + 3, '#9ad8ff'); px(-4, hc + 4, '#6ab8ff'); px(3, hc + 3, '#9ad8ff'); }
+    if (has('burn') && !back) for (let y = -3; y < 6; y++) for (let x = front ? 3 : -1; x <= (front ? 7 : 3); x++) if (inHead(x, y) && ((x + y * 3) % 4 !== 0)) { if (front && (x === 4 || x === 3) && (y === 1 || y === 2)) continue; px(x, hc + y, (x + y) % 3 ? '#c48080' : '#a86464'); }
+    if (has('scope') && !back) { const x = front ? -4 : 3; ball(x + .5, hc + 1.5, 2.3, 2.3, ramp('#c9a24a'), .9); px(x, hc + 1, '#bfeaff'); px(x + 1, hc + 1, '#4a8ac0'); px(x, hc + 2, '#4a8ac0'); px(x + 1, hc + 2, '#2a4a7a'); if (front) { px(x - 2, hc + 1, '#8a6a2a'); px(x - 3, hc, '#8a6a2a'); } }
+    if (has('patch')) { if (front) { for (let yy = 0; yy < 3; yy++) for (let x = -5; x <= -2; x++) px(x, hc + 1 + yy, yy === 0 && x === -5 ? '#2a2630' : '#121016'); for (let i = 0; i < 7; i++) px(-2 + i, hc - i, '#121016'); } else if (side) { for (let i = 0; i < 6; i++) px(-3 - i, hc - 1 + (i >> 1), '#121016'); } else for (let x = -rx; x <= rx; x++) px(Math.round(x), hc - 2, '#121016'); }
+    if (has('headwrap')) { const W = ramp('#e8e0cc'); for (let x = -Math.round(rx) - 1; x <= Math.round(rx) + 1; x++) { px(x, hc - 3, W[x < 0 ? 4 : 3]); px(x, hc - 2, W[2]); } if (front) for (let i = 0; i < 5; i++) { px(-5 + i, hc - 1 + i, W[3]); px(-4 + i, hc - 1 + i, W[2]); } else if (side) { px(5, hc - 1, W[3]); px(4, hc, W[2]); } if (front) { px(6, hc - 4, '#b04848'); } }
+    if (has('darkmask') && !back) { const G = ramp('#2a1a32'); const x0 = front ? -5 : 0, x1 = front ? 5 : 6; for (let y = -3; y < 6; y++) for (let x = x0; x <= x1; x++) if (inHead(x, y)) px(x, hc + y, (x === x0 + 2 && y < 1) || (x === x0 + 3 && y === -2) ? G[4] : G[y < 2 ? 2 : 1]); }
+    if (has('cracked') && !back) { px(front ? 1 : 3, hc - 1, '#4a3a4a'); px(front ? 2 : 4, hc, '#4a3a4a'); px(front ? 1 : 3, hc + 1, '#4a3a4a'); px(front ? 2 : 4, hc + 2, '#4a3a4a'); }
+    if (has('faceless') && !back) { const F = ramp('#a4a4ac'); const x0 = front ? -6 : -1, x1 = front ? 6 : 7; for (let y = -3; y < 7; y++) for (let x = x0; x <= x1; x++) if (inHead(x, y)) px(x, hc + y, F[x < -2 ? 3 : x > 3 ? 1 : 2]); }
+    // copricapi
+    if (has('widehat')) { const H = ramp('#34303c'); for (let x = -Math.round(rx) - 4; x <= Math.round(rx) + 4; x++) { px(x, hc - 3, H[1]); px(x, hc - 4, H[2]); } for (let y = -10; y < -4; y++) for (let x = -5; x <= 5; x++) px(x, hc + y, tone(H, .62 - x / 14, x, y)); for (let x = -5; x <= 5; x++) px(x, hc - 5, '#6a5a3a'); }
+    if (has('kabuto')) {
+      const K = ramp(L.cloth); for (let y = -ry - 1; y < -1; y++) for (let x = -rx - 1; x <= rx + 1; x++) { const nx = x / (rx + 1.5), ny = y / (ry + 1); if (nx * nx + ny * ny <= 1) px(Math.round(x), Math.round(hc + y), tone(K, .7 - nx * .3 - ny * .2, x, y)); }
+      for (let y = 0; y < 3; y++) { px(-Math.round(rx) - 2, hc - 1 + y, K[1]); px(Math.round(rx) + 2, hc - 1 + y, K[0]); }
+      const top = Math.round(hc - ry - 2), G = '#e8c25a', G2 = '#b08a2a';
+      if (L.crest === 'sun') { for (let x = -4; x <= 4; x++) px(x, top, G); for (let x = -3; x <= 3; x++) px(x, top - 1, x === 0 ? '#2a1416' : G); for (let x = -2; x <= 2; x++) px(x, top - 2, x === 0 ? '#2a1416' : G2); px(-5, top - 1, G2); px(5, top - 1, G2); }
+      else if (L.crest === 'antlers') { const A = '#8a6a44'; [[-2, 0], [-3, -1], [-4, -2], [-5, -3], [-4, -4], [-6, -2], [2, 0], [3, -1], [4, -2], [5, -3], [4, -4], [6, -2]].forEach(([x, y]) => px(x, top + y, A)); }
+      else { for (let x = -3; x <= 3; x++) px(x, top + (Math.abs(x) > 1 ? 0 : 1), G); }
+    }
+    if (has('heronclip')) { const t = Math.round(hc - ry - 1); px(2, t, '#f4f8ff'); px(3, t - 1, '#d0d8e4'); px(4, t - 1, '#ffffff'); px(5, t - 2, '#c0c8d4'); }
+    // bocca e collo
+    if (has('pipe') && !back) { const s = front ? 1 : -1, x0 = front ? 1 : 3; [0, 1, 2].forEach(i => px(x0 + i * s, hc + 5, '#5a3a1a')); px(x0 + 3 * s, hc + 4, '#6a4a2a'); px(x0 + 3 * s, hc + 3, '#6a4a2a'); px(x0 + 4 * s, hc + 1, '#d8d8e0'); px(x0 + 3 * s, hc, '#c0c0cc'); }
+    if (has('feathers')) for (let x = bx - 2; x <= bx + bw + 1; x++) { px(x, bT - 1 + (x & 1), '#1c1418'); px(x, bT + 1 + ((x >> 1) & 1), x % 3 ? '#2e2228' : '#4a3a44'); if (x % 3 === 0) px(x, bT - 2, '#3a2c34'); }
+    if (has('lantern') && !back) { px(0, bT + 1, '#3a3446'); rect(-1, bT + 2, 3, 3, '#6a6050'); px(0, bT + 3, '#a89870'); }
+    if (has('slate') && !back) { rect(-3, bT + 2, 6, 4, '#2a3038'); px(-3, bT + 2, '#8a6a4a'); px(2, bT + 2, '#8a6a4a'); px(-1, bT + 3, '#e8e8e0'); px(0, bT + 3, '#e8e8e0'); px(1, bT + 4, '#c8c8c0'); }
+    // busto e braccia
+    if (has('apron') && !back) for (let y = bT + 2; y < belt + 4; y++) for (let x = -3; x <= 2; x++) px(x, y, tone(ramp('#6a4a2a'), .62 - (x + 3) / 6 * .35, x, y));
+    if (has('bandarm')) for (let y = 3; y < 7; y++) px(dir === 2 ? -1 + step : bx - 2, bT + y + (dir === 2 ? 0 : step), y % 2 ? '#f0ece4' : '#d4ccc0');
+    if (has('wrench') && !back) { const x = dir === 2 ? 3 : bx + bw + 1, y0 = bT + 6 + (dir === 2 ? 0 : -step); for (let y = 0; y < 8; y++) px(x, y0 + y, y < 3 ? '#c03a3a' : '#9aa0a8'); px(x - 1, y0 + 8, '#bcc2ca'); px(x + 1, y0 + 8, '#bcc2ca'); px(x - 1, y0 + 9, '#7a8088'); px(x + 1, y0 + 9, '#7a8088'); }
+    if (has('umbrella') && !back) { const x = dir === 2 ? -6 : bx + bw + 2; for (let y = -15; y < -1; y++) px(x, y, y < -11 ? '#3a2a4a' : '#2a2030'); px(x - 1, -10, '#4a3a5a'); px(x + 1, -10, '#4a3a5a'); px(x - 1, -8, '#3a2a4a'); px(x + 1, -8, '#3a2a4a'); px(x + 1, -16, '#c9a24a'); px(x + 2, -15, '#c9a24a'); }
+  }
+  // Bullone: cane di latta grande come un vitello, caldaie e tubi, teiera per testa, occhi a lampadina, coda a molla
+  function tinDog(S, L, dir, fr) {
+    const { px, rect, ball, cyl, box } = S, T = ramp('#9aa2a8'), B = ramp('#b8823a'), D = ramp('#4a4e56'), bob = fr % 2 ? -1 : 0, step = [0, 1, 0, -1][fr % 4];
+    const flip = dir === 1 ? -1 : 1, X = x => (x - 3) * flip, Rl = x => x * flip;
+    // zampe (tubi)
+    [[-10, step], [-6, -step], [4, -step], [8, step]].forEach(([x, s]) => { for (let y = -9; y < -1; y++) { px(X(x), y + (s > 0 && y > -3 ? -1 : 0), D[y < -6 ? 3 : 2]); px(X(x + 1), y + (s > 0 && y > -3 ? -1 : 0), D[1]); } rect(Math.min(X(x - 1), X(x + 2)), -2, 3, 2, '#2a2a30'); });
+    // corpo: caldaia orizzontale con fasce rivettate
+    for (let y = -20; y < -8; y++) for (let x = -12; x <= 10; x++) { const ny = (y + 14) / 6.5; if (ny * ny > 1) continue; px(X(x), y + bob, tone(T, .66 - ny * .35 - (x > 7 ? .1 : 0), x, y)); }
+    [-7, 0, 6].forEach(x => { for (let y = -19; y < -9; y++) px(X(x), y + bob, B[(y & 1) ? 2 : 3]); });
+    px(X(-3), -12 + bob, '#ff9a3a'); px(X(-2), -12 + bob, '#ffd27a'); // bocca della caldaia accesa
+    // coda a molla
+    for (let i = 0; i < 6; i++) px(X(-13 - (i % 2)), -19 - i + bob, B[i % 2 ? 4 : 2]);
+    px(X(-13), -26 + bob, B[4]);
+    // collare con targhetta
+    for (let y = -21; y < -15; y++) px(X(9), y + bob, '#7a2a2a'); px(X(10), -16 + bob, '#e8c25a');
+    // testa: vecchia teiera, coperchio col pomello, beccuccio come muso
+    const hx = X(12), hy = -24 + bob; ball(hx, hy, 5.5, 4.5, T, .9); rect(hx - 4, hy + 3, 9, 2, T[1]);
+    rect(hx - 2, hy - 6, 5, 2, T[3]); px(hx, hy - 7, B[4]); px(hx + flip, hy - 7, B[3]);
+    for (let i = 1; i <= 4; i++) px(hx + Rl(5 + i), hy + 1 - (i >> 1), T[i < 3 ? 3 : 2]);
+    // manico della teiera = orecchio
+    px(hx - Rl(6), hy - 2, D[3]); px(hx - Rl(7), hy - 1, D[3]); px(hx - Rl(7), hy, D[2]); px(hx - Rl(6), hy + 1, D[2]);
+    // occhi a lampadina
+    if (dir !== 1) { [[1, -1], [3, -1]].forEach(([x, y]) => { px(hx + Rl(x), hy + y, '#fff6b0'); px(hx + Rl(x), hy + y + 1, L.eye); }); }
+    return S;
+  }
+  // Germoglio: automa giardiniere alto quanto un bambino, rame verde e radici, annaffiatoio per braccio sinistro, occhi a lanterna di carta
+  function sprout(S, L, dir, step, bob) {
+    const { px, rect, ball } = S, Cu = ramp('#5f9a7c'), Rt = ramp('#6a4a2e'), Lf = ramp('#5aaa4a');
+    // gambe di radici intrecciate
+    [[-4, step], [1, -step]].forEach(([x, s]) => { for (let y = -9; y < -1; y++) { px(x + ((y & 1) ? 0 : 1), y, Rt[2]); px(x + 1 + ((y & 1) ? 1 : 0), y, Rt[1]); } px(x - 1, -1, Rt[1]); px(x + 3, -1, Rt[1]); });
+    // busto di rame verderame
+    ball(0, -14, 6, 5, Cu, .85); for (let x = -5; x <= 5; x += 2) px(x, -12, Cu[1]); px(-2, -15, '#c88a4a'); px(2, -15, '#c88a4a');
+    // braccio destro di radice, braccio sinistro annaffiatoio
+    for (let y = 0; y < 6; y++) { px(7, -16 + y + step, Rt[2]); px(8, -15 + y + step, Rt[1]); }
+    const ax = dir === 2 ? 4 : -9; rect(ax, -16 - step, 3, 5, Cu[2]); px(ax, -16 - step, Cu[4]); for (let i = 0; i < 4; i++) px(ax - 1 - i, -13 - step - (i >> 1), Cu[i < 2 ? 3 : 2]); px(ax - 5, -16 - step, '#bfe8ff');
+    // testa con due occhi tondi come lanterne di carta
+    ball(0, -25 + bob, 6.5, 5.5, Cu, .85);
+    if (dir !== 1) { const xs = dir === 0 ? [-3, 3] : [3]; xs.forEach(x => { ball(x, -25 + bob, 2, 2, ramp('#ffe6a8'), .7); px(x, -25 + bob, '#fff8e0'); px(x, -24 + bob, L.eye); }); }
+    // germoglio in testa
+    rect(0, -34 + bob, 1, 4, Lf[1]); ball(-2, -34 + bob, 2, 1.2, Lf, .9); ball(2, -35 + bob, 2, 1.2, Lf, .9);
+    return S;
+  }
+
   // ======================= NEMICI =======================
   function enemySprite(look, col, fr) {
     const k = 'en|' + look + '|' + col + '|' + fr; if (SPR[k]) return SPR[k];
-    const human = { soldier: 'soldier', cultist: 'monk', samurai: 'samurai', boss_admiral: 'soldier', boss_shogun: 'samurai', boss_glass: 'monk' }[look];
+    // i boss e i nemici con un nome hanno l'aspetto del loro personaggio (anche nella variante del capitolo)
+    const who = look[0] === '@' ? look.slice(1) : { boss_admiral: 'malachar', boss_shogun: 'raiden', boss_glass: 'vedova' }[look];
+    if (who) { const L = ART.look(who); return charSprite('en_' + L._k, L, 0, fr); }
+    const human = { soldier: 'soldier', cultist: 'monk', samurai: 'samurai' }[look];
     if (human) { const L = Object.assign({}, ART.LOOK[human], { cloth2: col }); return SPR[k] = charSprite('en_' + look + col, L, 0, fr); }
     const S = canvas(34, 42, 17, 40), { px, rect, ball, box, cyl } = S, C = ramp(col), M = ramp('#5a5f6c'), bob = fr % 2;
     switch (look) {
@@ -185,6 +284,8 @@
       case 'beast': { ball(-1, -10 - bob, 10, 6, C, .9); ball(9, -14 - bob, 5, 4.5, C, .9); px(11, -15 - bob, '#fff6a0'); px(12, -15 - bob, '#1a1020'); for (let i = 0; i < 4; i++) { const x = -8 + i * 5, l = (i + fr) % 2; for (let y = 0; y < 5 - l; y++) { px(x, -5 + y, C[1]); px(x + 1, -5 + y, C[0]); } } for (let i = 0; i < 5; i++) px(-11 - i, -12 - bob + (i >> 1), C[2 - (i >> 1)]); for (let x = -6; x < 6; x += 2) px(x, -16 - bob, C[4]); break; }
       case 'wraith': { for (let y = -30; y < -1; y++) { const w = 6.5 - Math.abs(y + 18) * .16 + (y > -9 ? Math.sin(y * .9 + fr) * 1.2 : 0); for (let x = -Math.round(w); x <= Math.round(w); x++) px(x, y - bob, tone(C, .7 - x / (w * 2.2) - (y + 30) / 70, x, y)); } ball(-3, -25 - bob, 1.3, 1.6, ramp('#ffffff'), 1); ball(3, -25 - bob, 1.3, 1.6, ramp('#ffffff'), 1); break; }
       case 'golem': case 'boss_king': { const St = ramp('#4a4458'); box(-10, -32, 20, 22, 4, St); ball(-4, -24, 2, 1.4, C, 1); ball(4, -24, 2, 1.4, C, 1); [[-14, bob], [10, -bob]].forEach(([x, s]) => box(x, -28 + s, 5, 14, 2, St)); [[-8], [3]].forEach(([x]) => box(x, -10, 6, 8, 1, ramp('#3a3448'))); for (let i = 0; i < 6; i++) px(-6 + i * 2, -16 + (i % 2), C[3]); break; }
+      case 'moth': { const y = -22 - bob * 2, flap = fr % 2 ? 1 : 0; for (let i = 0; i < 2; i++) { const sx = i ? 1 : -1; for (let yy = -6 + flap; yy <= 5 - flap; yy++) for (let xx = 1; xx <= 11 - Math.abs(yy) * .6; xx++) px(sx * (xx + 1), y + yy, tone(C, .75 - xx / 16 - (yy > 0 ? .2 : 0), xx, yy)); px(sx * 6, y - 2, C[4]); px(sx * 7, y - 2, '#1a1020'); px(sx * 5, y + 3, C[0]); } for (let yy = -5; yy < 7; yy++) { px(0, y + yy, M[yy < 0 ? 3 : 2]); px(1, y + yy, M[1]); } px(-1, y - 7, M[3]); px(-2, y - 8, M[3]); px(2, y - 7, M[3]); px(3, y - 8, M[3]); for (let i = 0; i < 4; i++) px(((i * 7) % 9) - 4, y + 9 + i * 2 + bob, C[3]); break; }
+      case 'spark': { const y = -20 - bob * 2; ball(0, y, 5, 5, C, 1); px(-1, y - 1, '#ffffff'); px(0, y - 1, '#ffffff'); [[-1, -1], [1, -1], [1, 1], [-1, 1]].forEach(([dx, dy], i) => { let x = 0, yy = 0; for (let j = 0; j < 6; j++) { x += dx * (j % 2 ? 1 : 2); yy += dy * (j % 2 ? 2 : 1); px(x + dx * 4, y + yy + dy * 4, C[(j + fr) % 2 ? 4 : 3]); } }); px(-2, y + 1, '#1a1020'); px(2, y + 1, '#1a1020'); break; }
       default: box(-6, -18, 12, 14, 2, C);
     }
     return SPR[k] = outline2(S.c);
