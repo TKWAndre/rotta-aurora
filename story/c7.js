@@ -48,7 +48,7 @@ G.chapter({
   lore: {
     c7_isole: { title:'Le Isole del Silenzio', text:'Sotto la Tempesta Eterna, un arcipelago bianco dove il suono muore a pochi passi da chi lo produce. Le navi che vi precipitano raramente ripartono. Chi vi resta troppo a lungo smette di parlare, poi di ricordare, poi di sperare. Diventa un\'Eco.' },
     c7_campane: { title:'Le Campane Mute', text:'Un campanile senza chiesa, con sette campane di bronzo che nessuno ha mai sentito suonare. I naufraghi le battevano per chiamare aiuto. Il silenzio si è preso ogni rintocco. Sui batacchi, graffiti di nomi: centinaia.' },
-    c7_elise: { title:'Il Campo di Élise', text:'«Sessantatré anni fa sono caduta qui, come tutti. Ho trovato una scheggia di luce rosa nel lago. Ho costruito un ago per seguirla. Poi ho avuto paura, e sono tornata indietro. Se stai leggendo, passerotto, non tornare indietro.» — É. Valloire' },
+    c7_elise: { title:'Il Campo di Élise', text:'«Sessant\'anni fa sono caduta qui, come tutti. Ho trovato una scheggia di luce rosa nel lago. Ho costruito un ago per seguirla. Poi ho avuto paura, e sono tornata indietro. Se stai leggendo, passerotto, non tornare indietro.» — É. Valloire' },
     c7_aurora: { title:'Il Frammento', text:'Quando il Re Vuoto inghiottì l\'Aurora, il cuore di luce si spezzò. La parte più grande fu divorata. Alcune schegge sfuggirono: una divenne l\'ago di una bussola. Un\'altra, la più ostinata, imparò a ridere e si fece chiamare Nuvola.' },
     c7_custode: { title:'Il Custode del Silenzio', text:'Non è un mostro, dicono gli Echi. È una gentilezza andata a male. Nacque dal desiderio dei naufraghi di non soffrire più, e ora offre a chiunque il sonno senza fine: un sogno in cui nessuno muore e niente cambia.' },
     c7_lapidi: { title:'I Guardiani Antichi', text:'Prima della Lunga Notte, automi come Bram vegliavano le isole. Il loro cuore era un nucleo di pietra-luce che si consumava in mille anni. Un nucleo di riserva, tarato da mani pazienti, poteva prolungarne la vita. Pochissimi ne ebbero uno.' },
@@ -378,7 +378,7 @@ G.chapter({
       "@otto:surprised Ehi. Quella... sono io?",
       "Nel riflesso di Otto c'è una donna in divisa blu dell'Armata, con mostrine d'oro. Dietro di lei, file di cannoni. Sorride. È un sorriso orribile.",
       "@otto:hurt Io... non sono così. Non più. Vero?",
-      "@bram Lo Specchio non mostra ciò che sei, piccola fiamma. Mostra ciò che temi di essere. E ciò che sei, se guardi più a fondo.",
+      "@bram Lo Specchio non mostra ciò che sei, Ottavia. Mostra ciò che temi di essere. E ciò che sei, se guardi più a fondo.",
       "Otto guarda più a fondo. Il riflesso si increspa. Ora c'è una ragazza con le mani sporche di grasso che ride, seduta sul motore di una piccola nave gialla.",
       "@otto:happy ...Oh. Quella mi piace di più.",
       "Kai si avvicina. Nel suo riflesso c'è un uomo in armatura laccata, seduto su un trono, con gli occhi neri come pozzi. Raiden. O Kai, tra vent'anni.",
@@ -804,7 +804,7 @@ G.chapter({
       "@elise Signor Tenjō. Lei ha gli occhi di chi è scappato tanto. Si fermi un po', ogni tanto. Si sta meglio.",
       "@kai:surprised ...Sì, signora.",
       {if:"has('bram')", then:[
-        "@elise:sad Bram. Vecchio amico. Ci siamo incontrati sessant'anni fa, ricordi? Dormivi. Ti ho lasciato un fiore sulla spalla.",
+        "@elise:sad Bram. Vecchio amico. Ti ho svegliato quarantun anni fa, ricordi? Troppo presto. Prima di andarmene ti ho lasciato un fiore sulla spalla.",
         "@bram:surprised ...Il fiore di luce. Me lo sono trovato al risveglio. Pensavo fosse cresciuto da solo.",
         "@elise:happy Niente cresce da solo, vecchia montagna. Ricordatelo domani. Mani che amano.",
       ]},

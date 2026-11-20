@@ -486,7 +486,7 @@ G.chapter({
         "@kai Sei insopportabile quando hai ragione, cartografa. Lo sai, vero?",
       ]},
       {sfx:'door'},
-      "La Sala del Trono si apre da sola. È enorme: colonne di lacca, un soffitto perso nel buio e, al posto della parete di fondo, lo Specchio del Sole, nero come un pozzo.",
+      "La Sala del Trono si apre da sola. È enorme: colonne di lacca, un soffitto perso nel buio e, al posto della parete di fondo, un'apertura sul cielo: là fuori, sospeso sopra il palazzo, lo Specchio del Sole, nero come un pozzo.",
       "Davanti allo Specchio, su un trono basso di legno chiaro, siede un uomo in armatura completa. L'elmo, con una cresta a forma di sole spezzato, è posato accanto a lui.",
       "Ha i capelli bianchi e un viso giovane. Un viso che conosci, perché lo vedi ogni giorno, più giovane e più arrabbiato: quello di Kai.",
       {music:'tension'},
@@ -522,7 +522,7 @@ G.chapter({
       "@raiden E tu, Kai... rivedrai tua madre.",
       "Per un istante, solo un istante, Kai esita. Lo vedi nelle sue spalle.",
       {if:"has('bram')", then:[
-        "@bram:serious Le fami non restituiscono, Shōgun. Ho guardato il Re Vuoto mangiare per mille anni. Non ha mai sputato indietro un solo raggio.",
+        "@bram:serious Le fami non restituiscono, Shōgun. Ho guardato il Re Vuoto mangiare per cent'anni. Non ha mai sputato indietro un solo raggio.",
       ]},
       {if:"has('sable')", then:[
         "@sable:serious Riconosco un contratto truccato quando lo vedo, Maestà. Ne ho firmati abbastanza. La clausola che non leggi è sempre quella che ti uccide.",
@@ -657,7 +657,7 @@ G.chapter({
       "Sotto c'è una scala. Scende a spirale nel buio, e ogni gradino è una lanterna spenta. Migliaia di lanterne. Il tributo di diciotto anni.",
       "@otto:surprised Per tutti i bulloni del creato...",
       {if:"has('bram')", then:[
-        "@bram Lo ricordo, questo pozzo. Mille anni fa era una fonte di luce. Il sole saliva da qui ogni mattina, come acqua da una sorgente.",
+        "@bram Lo ricordo, questo pozzo. Cent'anni fa era una fonte di luce. Il sole saliva da qui ogni mattina, come acqua da una sorgente.",
       ]},
       "La Bussola d'Ottone ti scotta in mano. L'ago non oscilla più. Punta giù, dritto, tremando come una corda di koto.",
       "@nuvola:serious Mira. Laggiù c'è una parte di me. La parte più grande. Mi sta chiamando per nome. Un nome che non sapevo di avere.",
@@ -852,9 +852,9 @@ G.chapter({
       "Bram è seduto dove il tetto finisce, immobile come una statua di guardia. Tra le dita enormi tiene un fiore di ciliegio nero, con una delicatezza impossibile.",
       "@bram Piccola fiamma. Siediti. Il muschio è morbido, e io sono un buon riparo dal vento.",
       "@mira Cosa guardi, Bram?",
-      "@bram Est. Guardo dove dovrebbe sorgere il sole. Mille anni fa, da questo stesso punto, lo vidi sorgere per l'ultima volta.",
+      "@bram Est. Guardo dove dovrebbe sorgere il sole. Cent'anni fa, da questo stesso punto, lo vidi sorgere per l'ultima volta.",
       "@bram Allora qui non c'era una città. C'era un prato. E bambini che correvano verso la luce gridando i nomi dei colori.",
-      "@bram:sad Io li ricordo tutti, i colori. Li custodisco da mille anni. A volte ho paura di essere l'ultimo posto dove esistono ancora.",
+      "@bram:sad Io li ricordo tutti, i colori. Li custodisco da cent'anni. A volte ho paura di essere l'ultimo posto dove esistono ancora.",
       {choice:[
         {t:'«Raccontameli. Così saremo in due.»', aff:{bram:2}, then:[
           "@mira Raccontameli. Così saremo in due a custodirli.",

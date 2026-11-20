@@ -1,4 +1,4 @@
-const V = 'aurora-20261120-154350';
+const V = 'aurora-20261120-164547';
 const CORE = ['./', './index.html', './manifest.json', './js/art.js', './js/world.js', './js/pixel.js', './js/sprites.js', './js/modern.js', './js/rooms.js', './js/audio.js', './js/engine.js',
   './story/c1.js', './story/c2.js', './story/c3.js', './story/c4.js', './story/c5.js', './story/c6.js', './story/c7.js', './story/c8.js', './story/c9.js', './story/cinematics.js'];
 const EXTRA = ['./icons/icon-180.png', './icons/icon-192.png', './icons/icon-512.png',

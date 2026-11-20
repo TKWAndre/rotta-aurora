@@ -422,7 +422,7 @@ G.chapter({
       "La spada di Kai è fuori dal fodero prima che chiunque la veda muoversi. La punta si ferma a un dito dalla gola del vecchio samurai.",
       "@kai:angry Finisci quella frase e sarà l'ultima.",
       "Silenzio. Il vento fa sbattere i manifesti come ali.",
-      "@sagara:serious Mi avete insegnato voi, da bambino, che un samurai non fugge. Lo ricordate? Avevate sette anni e piangevate perché un falco vi aveva rubato il riso.",
+      "@sagara:serious Ve l'ho insegnato io, quando eravate bambino, che un samurai non fugge. Lo ricordate? Avevate sette anni e piangevate perché un falco vi aveva rubato il riso.",
       "@nuvola:happy Kai piangeva per il riso!",
       "@kai:angry NUVOLA.",
       "@sagara Non posso tornare a mani vuote, Waka-sama. Il mio onore lo vieta. Se non verrete, dovrò portarvi.",
@@ -848,7 +848,7 @@ G.chapter({
         ]},
         {t:'Ascoltare Bram', if:"has('bram')", then:[
           "Bram è seduto con la schiena contro un palo, così immobile che una falena gli si è posata sulla spalla. Guarda le lanterne.",
-          "@bram Mille anni fa, piccola fiamma, questo cielo era pieno di luce vera. Le nuvole avevano ombre. Le ombre si muovevano con il sole.",
+          "@bram Cent'anni fa, piccola fiamma, questo cielo era pieno di luce vera. Le nuvole avevano ombre. Le ombre si muovevano con il sole.",
           "@mira Ti ricordi com'era?",
           "@bram:sad Ricordo il colore. Un rosa che diventa oro. Un oro che diventa bianco. Ricordo il calore sulla pietra della mia schiena.",
           {if:"f.c3_core", then:[
@@ -885,10 +885,10 @@ G.chapter({
           "@sable:surprised Parlare. Con me. Senza un secondo fine. Sei proprio strana, cartografa.",
           {if:"a.sable>=2", then:[
             "@sable:serious Va bene. Ti dico una cosa vera, una sola. Così poi siamo pari.",
-            "@sable Avevo una sorella. Più piccola. Rubavamo insieme, al porto di Corvina. Lei faceva la distrazione, io prendevo i borselli.",
-            "@sable Un giorno la distrazione è andata male. Le guardie hanno preso lei. Io sono scappata. Avevo i borselli.",
+            "@sable Avevo un fratello. Più piccolo. Rubavamo insieme, al porto di Corvina. Lui faceva la distrazione, io prendevo i borselli.",
+            "@sable Un giorno la distrazione è andata male. Le guardie hanno preso lui. Io sono scappata. Avevo i borselli.",
             "@mira:sad E poi?",
-            "@sable:sad E poi niente. Non l'ho più vista. Da allora lavoro da sola. È più sicuro. Nessuno resta indietro, se non c'è nessuno.",
+            "@sable:sad E poi niente. Non l'ho più visto. Da allora lavoro da sola. È più sicuro. Nessuno resta indietro, se non c'è nessuno.",
             "@mira Adesso non lavori da sola.",
             "@sable:serious Lo so. È proprio questo che mi preoccupa, tesoro.",
             "Si alza. Si toglie un guanto. Ha una cicatrice lunga sul palmo. Poi se lo rimette, veloce, come se si fosse spogliata troppo.",

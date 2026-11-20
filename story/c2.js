@@ -544,7 +544,7 @@ G.chapter({
       "Bullone si siede. Esattamente sopra il piede di Kai.",
       "@mira:happy Gli piaci.",
       "@kai:hurt Ho notato.",
-      "@mira:serious Però... cosa ne facciamo? Fiammetta non tornerà. E noi non possiamo portare un cane grande come un vitello su una nave piccola come la Libellula.",
+      "@mira:serious Però... cosa ne facciamo? Fiammetta non tornerà. E la Libellula non è un posto per un cane con la caldaia accesa in pancia: una scintilla nella stiva del carburante, e voliamo tutti.",
       {choice:[
         {t:'Affidalo a Nonna Tosca e Nico.', aff:{otto:1}, set:{c2_cane:'tosca'}, then:[
           "@mira:happy Nonna Tosca ha detto che d'inverno fa freddo. Un cane con una caldaia in pancia è meglio di una stufa.",

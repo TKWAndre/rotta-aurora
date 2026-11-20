@@ -538,7 +538,7 @@ G.chapter({
       "Mira assaggia. È... sorprendentemente buona.",
       "@mira È buonissima!",
       "@otto:surprised Davvero? Oh. Non me l'aspettavo. Di solito mi esce bene solo quello che esplode.",
-      "@otto Mia madre faceva questa zuppa ogni volta che pioveva. A Fonderia Bassa pioveva sempre, quindi la mangiavamo sempre. Per questo odio la pioggia e adoro i fagioli.",
+      "@otto Mia madre faceva questa zuppa ogni volta che pioveva. Nel quartiere della Fonderia Bassa, a Ferrovecchio, pioveva sempre, quindi la mangiavamo sempre. Per questo odio la pioggia e adoro i fagioli.",
       "@mira Tua madre è ancora a Fonderia Bassa?",
       "@otto:sad Sì. Credo. Non le scrivo da quando ho disertato. Penso che sarebbe fiera di me. Poi penso ai cannoni e penso che non lo sarebbe. E così non scrivo.",
       {choice:[

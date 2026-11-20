@@ -758,7 +758,7 @@ G.chapter({
       "@germoglio:hurt Custode! Custode, è Ulmo! Ulmo si è svegliato!",
       "@bram:hurt ...No. Non lui. Non così.",
       "@mira:surprised Chi è Ulmo?",
-      "@bram:sad Mio fratello. Un Custode come me. Quando arrivò la fame, lui la combatté corpo a corpo. Un po' di quella fame gli entrò dentro. Lo abbiamo addormentato per proteggerlo. Per proteggere noi.",
+      "@bram:sad Mio fratello. Un Custode come me. Quando arrivò la fame, lui la combatté corpo a corpo. Un po' di quella fame gli entrò dentro. Lo abbiamo addormentato per proteggerlo. Per proteggere noi. Io mi sono addormentato nel suo petto, per vegliarlo da vicino.",
       "@bram:hurt La Chiave lo ha svegliato. La luce lo chiama. E la fame dentro di lui... ha sentito l'odore della luce.",
       {bg:'giant_hall'}, {sfx:'explosion'}, {fx:'shake'},
       "Nella Sala del Gigante, il colosso seduto sul trono si è alzato. Non è più di pietra grigia: è nero, venato di crepe viola che pulsano. Dove un tempo c'erano occhi, ora ci sono due buchi. E sul suo capo, piccola, storta, una corona di ombra.",
